@@ -1,0 +1,71 @@
+// Dark-mode token overrides. `data-theme` is set on <html> by the viewer's
+// theme bootstrap/context (apps/gis-viewer/src/app/theme). Raw hex is allowed
+// here: this is a token-definition file, like the primitives it shadows.
+
+html[data-theme="dark"] {
+  // Base surfaces
+  --base-white: #14161a;
+  --surface-panel: #1c1f24;
+  --surface-muted: #23262c;
+
+  // Neutral scale — inverted so existing usages (borders, hovers, muted text)
+  // stay legible without touching a single component.
+  --neutral-50: #23262c;
+  --neutral-100: #2a2e35;
+  --neutral-200: #33373f;
+  --neutral-300: #3d424b;
+  --neutral-400: #565c66;
+  --neutral-500: #767c87;
+  --neutral-600: #9aa0aa;
+  --neutral-700: #c1c6ce;
+  --neutral-800: #dde0e5;
+  --neutral-900: #f2f3f5;
+
+  // Text
+  --text-default: #f2f3f5;
+  --text-secondary: #c1c6ce;
+  --text-paragraph: #c1c6ce;
+  --text-placeholder: #767c87;
+  --text-disabled: #565c66;
+
+  // Borders & fields
+  --border-default: #33373f;
+  --border-subtle: #2a2e35;
+  --border-primary: #3d824f;
+  --field-bg: #1c1f24;
+  --field-border: #33373f;
+  --field-label: #c1c6ce;
+
+  // Icons
+  --icon-default: #f2f3f5;
+  --icon-neutral: #9aa0aa;
+
+  // Overlay / alpha helpers — stronger so "black at x% alpha" still reads
+  // against a dark surface.
+  --alpha-black-10: rgba(0, 0, 0, 0.4);
+  --alpha-black-30: rgba(0, 0, 0, 0.6);
+
+  // "Frosted glass over the map" tints, designed for a white map backdrop.
+  // Re-based on the dark surface color so they read as soft dark panels.
+  --alpha-white-70: rgba(20, 22, 26, 0.82);
+  --alpha-white-90: rgba(20, 22, 26, 0.9);
+
+  --alpha-green-10: rgba(61, 130, 79, 0.16);
+
+  // Shadows — darker surfaces need a slightly stronger shadow to stay visible.
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.55);
+
+  // Focus ring stays visible on a dark field background.
+  --focus-ring: #5fb377;
+
+  // Mantine's own gray tokens, used directly in a couple of modules.
+  --mantine-color-gray-2: #2a2e35;
+  --mantine-color-gray-3: #33373f;
+
+  // Pale "badge" backgrounds (Attestations result cards, dashboard filter pills).
+  --primary-sa-50: rgba(61, 130, 79, 0.18);
+  --red-50: rgba(217, 45, 32, 0.16);
+  --red-200: rgba(217, 45, 32, 0.4);
+}

@@ -1,0 +1,19 @@
+/* Button — design refinements layered on Mantine variants.
+   Color/hover/active come from the green theme (filled = primary-sa-600 → hover 700);
+   here we only pin typography + focus ring so all variants stay intact.
+   Spec (Figma login "متابعة"): h40, radius-md(8), px16, gap4, text-md/Medium, white. */
+.button {
+  font-family: var(--font-family-text);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--typo-text-md-size);
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+
+  &:disabled,
+  &[data-disabled="true"] {
+    cursor: not-allowed;
+  }
+}

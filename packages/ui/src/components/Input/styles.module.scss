@@ -1,0 +1,39 @@
+/* Input — matches DGA field spec from Figma login:
+   label text-sm/Regular #161616; field bg field-background-darker (#f3f4f6);
+   h48, radius-md(8); placeholder text-sm #6c737f. */
+.label.label {
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  font-weight: var(--font-weight-regular);
+  color: var(--field-label);
+  margin-bottom: var(--space-1);
+}
+
+/* Doubled class: Mantine's base rules ship in the same layer and may be emitted
+   after this module, so equal specificity would lose on source order. */
+.input.input {
+  height: 48px;
+  background-color: var(--field-bg-darker);
+  border: 1px solid transparent;
+  border-radius: var(--mantine-radius-md);
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-sm-size);
+  color: var(--text-default);
+
+  &::placeholder {
+    color: var(--text-placeholder);
+  }
+
+  &:focus,
+  &:focus-within {
+    border-color: var(--field-border-focus);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+}
+
+/* Toolbar height: matches SearchInput's 36px so a field, a search box and a
+   button can share one row. */
+.inputSm.inputSm {
+  height: 36px;
+}

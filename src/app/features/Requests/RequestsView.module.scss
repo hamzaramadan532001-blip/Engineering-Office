@@ -1,0 +1,255 @@
+.page {
+  direction: rtl;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--surface-panel, var(--base-white));
+  padding: var(--space-6, 24px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+  margin-bottom: var(--space-6, 24px);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--typo-text-xl-size, 22px);
+  font-weight: var(--font-weight-semibold, 600);
+  color: var(--text-default, var(--neutral-700));
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2, 8px);
+  min-height: 60%;
+  text-align: center;
+  color: var(--neutral-700);
+  padding: var(--space-6, 24px);
+}
+
+.emptyIcon {
+  display: flex;
+  font-size: 40px;
+  color: var(--primary-sa-600, currentColor);
+  margin-bottom: var(--space-2, 8px);
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: var(--typo-text-md-size, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--text-default, var(--neutral-700));
+}
+
+.emptyHint {
+  margin: 0;
+  font-size: var(--typo-text-sm-size, 14px);
+  color: var(--neutral-700);
+  opacity: 0.7;
+}
+
+/* ---------- Toolbar: search filter ---------- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4, 16px);
+}
+
+.searchBox {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  right: var(--space-4, 16px);
+  transform: translateY(-50%);
+  color: #a3a3a3;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid #e5e5e5;
+  background-color: #fafafa;
+  padding: 0 var(--space-10, 40px) 0 var(--space-4, 16px);
+  font-size: var(--typo-text-sm-size);
+  color: #1a1a1a;
+  direction: rtl;
+
+  &::placeholder {
+    color: #a3a3a3;
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--button-bg-primary);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+}
+
+.empty {
+  margin: 0;
+  padding: var(--space-8, 32px);
+  text-align: center;
+  color: #737373;
+  background-color: #fafafa;
+  border-radius: var(--mantine-radius-lg);
+}
+
+/* ---------- Table ---------- */
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid #eee;
+  border-radius: var(--mantine-radius-lg);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--typo-text-sm-size);
+
+  th,
+  td {
+    padding: var(--space-3, 12px) var(--space-4, 16px);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  thead th {
+    background-color: rgba(15, 61, 46, 0.05);
+    color: #4d4d4d;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--typo-text-xs-size);
+  }
+
+  tbody tr:not(:last-child) td {
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  tbody tr:hover {
+    background-color: #fafafa;
+  }
+}
+
+.mono {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: right;
+}
+
+/* ---------- Status badge ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1, 4px) var(--space-3, 12px);
+  border-radius: 999px;
+  font-size: var(--typo-text-xs-size);
+  font-weight: var(--font-weight-medium);
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+/* ---------- PDF preview modal ---------- */
+.pdfPreviewFrame {
+  width: 100%;
+  height: 80vh;
+  border: none;
+  border-radius: var(--mantine-radius-md, 8px);
+}
+/* مسار العمل: the request's current step, with the step that follows it underneath.
+ * Two lines rather than two columns — the table already carries six. */
+.workflowCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  text-align: start;
+}
+
+.workflowCurrent {
+  font-weight: 600;
+}
+
+.workflowNext {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+/* ── Attachments popup (مرفقات الطلب) ────────────────────────────────────────── */
+
+.attachmentsLoading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 12px 0;
+
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.attachmentsError {
+  padding: 8px 10px;
+  border-radius: 6px;
+
+  background: var(--red-50);
+  color: var(--red-600);
+}
+
+.attachmentName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  overflow-wrap: anywhere;
+}
+
+.attachmentActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* "open in a new tab" — an icon link rather than a button, so middle-click and
+ * "copy link" behave the way people expect of a file. */
+.attachmentLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  border: 1px solid var(--neutral-200);
+  border-radius: 6px;
+
+  color: var(--text-secondary);
+
+  &:hover {
+    background: var(--surface-muted, var(--neutral-50));
+    color: var(--primary-sa-600);
+  }
+}
+
+.attachmentPreview {
+  width: 100%;
+  height: 60vh;
+
+  border: 1px solid var(--neutral-200);
+  border-radius: 8px;
+
+  background: var(--base-white);
+}

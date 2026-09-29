@@ -1,0 +1,18 @@
+/** Inert wrapper for a control the session may not use (RequireFunction mode="disable"). */
+.disabled {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-inline-size: 0; // fieldset's UA default would fight the panel width
+  cursor: not-allowed;
+}
+
+/** The control itself: dimmed and unclickable, while the wrapper still gets hover. */
+.inert {
+  display: block;
+  width: 100%;
+  pointer-events: none;
+  opacity: 0.5;
+}

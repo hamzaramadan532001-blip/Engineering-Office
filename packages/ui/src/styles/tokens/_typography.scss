@@ -1,0 +1,72 @@
+/* ===========================================================================
+   TYPOGRAPHY TOKENS
+   Source: Figma "Holy Makkah Municipality (3)" — Font/Size/LineHeight variables.
+   Font: IBM Plex Sans Arabic (wired in app as --font-ibm-sans).
+   Scale is Untitled-UI style. Sizes in rem (1rem = 16px).
+=========================================================================== */
+:root {
+  /* Families */
+  --font-family-text: var(--font-ibm-sans), system-ui, sans-serif;
+  --font-family-display: var(--font-ibm-sans), system-ui, sans-serif;
+
+  /* Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Display / 2xl — 72 / 90, Bold  (Nafath verification number) */
+  --typo-display-2xl-size: 4.5rem;    /* 72px */
+  --typo-display-2xl-line: 5.625rem;  /* 90px */
+
+  /* Display / lg — 48 / 60, Bold  (auth brand headline) */
+  --typo-display-lg-size: 3rem;       /* 48px */
+  --typo-display-lg-line: 3.75rem;    /* 60px */
+  --typo-display-lg-tracking: -0.125rem; /* -2px */
+
+  /* Display / xs — 24 / 32, Bold  (page & section titles) */
+  --typo-display-xs-size: 1.5rem;     /* 24px */
+  --typo-display-xs-line: 2rem;       /* 32px */
+
+  /* Text / xl — 20 / 30  (lead paragraphs, brand tagline) */
+  --typo-text-xl-size: 1.25rem;       /* 20px */
+  --typo-text-xl-line: 1.875rem;      /* 30px */
+
+  /* Text / md — 16 / 24  (body, labels, buttons) */
+  --typo-text-md-size: 1rem;          /* 16px */
+  --typo-text-md-line: 1.5rem;        /* 24px */
+
+  /* Text / sm — 14 / 20  (secondary text, list rows) */
+  --typo-text-sm-size: 0.875rem;      /* 14px */
+  --typo-text-sm-line: 1.25rem;       /* 20px */
+
+  /* Text / xs — 12 / 18  (captions, chips, helper text) */
+  --typo-text-xs-size: 0.75rem;       /* 12px */
+  --typo-text-xs-line: 1.125rem;      /* 18px */
+}
+
+/* Optional convenience classes — apply a full type style in one go.
+   Prefer the Text component's `variant` prop where available. */
+.typo-display-xs {
+  font-family: var(--font-family-display);
+  font-size: var(--typo-display-xs-size);
+  line-height: var(--typo-display-xs-line);
+  font-weight: var(--font-weight-bold);
+}
+.typo-text-md {
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-md-size);
+  line-height: var(--typo-text-md-line);
+  font-weight: var(--font-weight-medium);
+}
+.typo-text-sm {
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  font-weight: var(--font-weight-regular);
+}
+.typo-text-xs {
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-xs-size);
+  line-height: var(--typo-text-xs-line);
+  font-weight: var(--font-weight-regular);
+}

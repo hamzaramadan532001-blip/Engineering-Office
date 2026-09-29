@@ -1,0 +1,18 @@
+.badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1/1;
+    & > span{
+        display: flex;
+        padding: .1em;
+    }
+}
+
+/* Design refinement: tokenized focus ring. Variant colors stay Mantine's. */
+.actionIcon {
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--focus-ring);
+    }
+}

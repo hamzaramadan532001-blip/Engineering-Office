@@ -1,0 +1,28 @@
+/* DGA language pill. Brand-specific tints (kept as literals to match Figma exactly). */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 15px;
+  border: 1px solid #e2e8e4;
+  border-radius: 20px;
+  background-color: #f0f5f2;
+  color: #03542b;
+  cursor: pointer;
+  font-family: var(--font-family-text);
+
+  &:hover {
+    background-color: #e7efe9;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+}
+
+.label {
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  font-weight: var(--font-weight-bold);
+}

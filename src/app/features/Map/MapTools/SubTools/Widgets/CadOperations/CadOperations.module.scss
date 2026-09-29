@@ -1,0 +1,946 @@
+/*
+ * Docked to the right edge of the map, below the logo slot. `position: fixed`
+ * (not absolute) for the same reason MobileHeader is fixed — <arcgis-map>
+ * establishes its own stacking context, and this rail is mounted as a sibling
+ * so its z-index competes with the other overlay panels rather than being
+ * trapped under the map element.
+ *
+ * z-index sits just under .basemapPicker (200) so the picker still wins when
+ * both are open.
+ */
+.rail {
+  position: absolute;
+  top: 88px;
+  right: 16px;
+
+  z-index: 190;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  width: 280px;
+  max-width: calc(100vw - 32px);
+}
+
+.railToggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: 100%;
+  padding: 10px 12px;
+
+  border: 1px solid var(--neutral-200);
+  border-radius: 8px;
+
+  background: var(--base-white);
+  color: var(--text-default, var(--neutral-700));
+
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--surface-muted, var(--neutral-50));
+  }
+}
+
+.railToggleLabel {
+  flex: 1;
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.railChevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.railChevronOpen {
+  transform: rotate(180deg);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+
+  &[hidden] {
+    display: none;
+  }
+
+  max-height: 65vh;
+  overflow-y: auto;
+
+  border: 1px solid var(--neutral-200);
+  border-radius: 8px;
+
+  background: var(--base-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-sa-600) var(--neutral-200);
+}
+
+.activeFile {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--neutral-100);
+}
+
+.activeFileName {
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The one operation's title — a plain heading now, not an accordion toggle. */
+.operationHeader {
+  padding: 10px 12px;
+
+  color: var(--text-default, var(--neutral-700));
+
+  font-size: 12px;
+  font-weight: 600;
+  text-align: start;
+}
+
+.operationBody {
+  padding: 0 12px 12px;
+}
+
+.operationActions {
+  justify-content: flex-end;
+}
+
+.message {
+  padding: 8px 10px;
+  border-radius: 6px;
+
+  background: var(--primary-sa-50, #f0fdf4);
+  color: var(--primary-sa-700, #166534);
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.error {
+  padding: 8px 10px;
+  border-radius: 6px;
+
+  background: var(--red-50);
+  color: var(--red-600);
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  white-space: pre-line;
+}
+
+/* Spatial read-out of the CAD ∩ regulation polygon, inside the panel. Logical
+ * properties throughout so the label/value pair reads right-to-left like the rest
+ * of the UI, and stays correct if the document direction ever flips. */
+.context {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  padding: 8px 10px;
+
+  border: 1px solid var(--neutral-200);
+  border-radius: 6px;
+
+  background: var(--surface-muted, var(--neutral-50));
+}
+
+.contextList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  margin: 0;
+}
+
+.contextRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.contextLabel {
+  flex-shrink: 0;
+
+  margin: 0;
+
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.contextValue {
+  flex: 1;
+  min-width: 0;
+
+  margin-inline-start: 0;
+
+  color: var(--text-default, var(--neutral-700));
+
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: start;
+
+  overflow-wrap: anywhere;
+}
+
+/* ── Survey-report sheet (A4 landscape) ───────────────────────────────────────
+ * Snapshotted to a PDF by html2canvas (see IntersectReport.tsx), so it must be REAL,
+ * laid-out DOM — not `display: none` — or the logo and the Arabic webfont may not be
+ * ready. It is therefore parked off-screen and transparent; the export un-parks a CLONE.
+ *
+ * `.cad-print-root` is global (unhashed) because the export finds the sheet by it.
+ * The sheet is exactly 1123 × 794 px = A4 landscape at 96 dpi, so it maps 1:1 onto a page.
+ *
+ * Colours use only tokens the dark theme does NOT override (--alpha-white-100 /
+ * --alpha-black-* / --primary-sa-*): the form is ink on white paper regardless of the
+ * theme the map is being viewed in. Physical left/right is set by DOM/grid-column
+ * order in IntersectReport.tsx — currently mirrored (photos on the right, the form
+ * data on the left) — not by `direction`, which html2canvas does not honour on a grid.
+ */
+:global(.cad-print-root) {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+
+  z-index: -1;
+
+  width: 1123px;
+  height: 794px;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sheet {
+  --rp-ink: var(--alpha-black-100);
+  --rp-line: var(--alpha-black-60);
+
+  display: flex;
+  flex-direction: column;
+
+  width: 1123px;
+  height: 794px;
+  padding: 12px;
+
+  background: var(--alpha-white-100);
+  color: var(--rp-ink);
+
+  font-family: var(--font-family-text);
+  font-size: 10px;
+  line-height: 1.35;
+
+  /* The frame's physical left-to-right order is set by DOM/grid-column order below
+   * (not by `direction`, which html2canvas does not reliably honour on a grid);
+   * every column still switches to rtl for its own content. */
+  direction: ltr;
+
+  &,
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+.frame {
+  flex: 1;
+  min-height: 0;
+
+  display: grid;
+  /* Order matches the mirrored DOM order in IntersectReport.tsx: info, sketch, photos. */
+  grid-template-columns: 24fr 47fr 27fr;
+  gap: 8px;
+
+  padding: 6px;
+  border: 2px solid var(--rp-ink);
+}
+
+.colPhotos,
+.colMain,
+.colInfo {
+  min-width: 0;
+  min-height: 0;
+
+  display: grid;
+  gap: 6px;
+
+  direction: rtl;
+  text-align: start;
+}
+
+/* ── left: photos ── */
+.colPhotos {
+  grid-template-rows: 31fr 34fr 17fr 17fr;
+}
+
+.photoPair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+
+  min-height: 0;
+}
+
+.photoBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px;
+  border: 1px solid var(--rp-line);
+
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ── the aerial-photo box: caption on top, photo + polygon filling the rest ── */
+.photoBoxMedia {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.photoCaption {
+  padding: 3px 6px;
+  border-bottom: 1px solid var(--rp-line);
+
+  font-size: 9px;
+  line-height: 1.35;
+  background: #ffffff;
+}
+
+.photoSource {
+  font-size: 8px;
+  font-weight: 400;
+}
+
+/* The svg is absolutely filled so its intrinsic aspect ratio can never grow the grid row. */
+.photoSvgWrap {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.photoSvg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── centre: sketch / limits / pledge ── */
+.colMain {
+  grid-template-rows: 60fr 21fr 18fr;
+}
+
+.drawing {
+  position: relative;
+
+  min-height: 0;
+  overflow: hidden;
+
+  border: 1px solid var(--rp-line);
+}
+
+.drawingSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.limits {
+  width: 100%;
+  height: 100%;
+
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  th,
+  td {
+    padding: 1px 6px;
+    border: 1px solid var(--rp-line);
+
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  thead th,
+  tbody th {
+    font-size: 11px;
+    font-weight: 700;
+  }
+}
+
+.tableTitle {
+  font-size: 12px !important;
+}
+
+.pledge {
+  display: grid;
+  grid-template-rows: auto repeat(4, 1fr);
+
+  min-height: 0;
+  border: 1px solid var(--rp-line);
+}
+
+.pledgeItem {
+  display: flex;
+  align-items: center;
+
+  padding: 0 8px;
+  border-top: 1px solid var(--rp-line);
+
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* ── right: header, owner, property, coordinates, office ── */
+.colInfo {
+  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
+}
+
+.orgHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  height: 62px;
+}
+
+.orgLogo {
+  flex-shrink: 0;
+
+  width: 96px;
+  height: auto;
+}
+
+.orgText {
+  min-width: 0;
+
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.banner {
+  padding: 4px 6px;
+
+  background: var(--primary-sa-700);
+  color: var(--alpha-white-100);
+
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.section {
+  min-width: 0;
+  overflow: hidden;
+
+  border: 1px solid var(--rp-line);
+}
+
+.sectionTitle {
+  padding: 2px 4px;
+
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.kvRow {
+  display: grid;
+  grid-template-columns: 38% 1fr;
+
+  min-height: 17px;
+  border-top: 1px solid var(--rp-line);
+}
+
+.kvRowSmall {
+  min-height: 14px;
+  /* Half-width office block, so the label needs a larger share than the old 22%. */
+  grid-template-columns: 34% 1fr;
+
+  .kvLabel {
+    font-size: 7px;
+  }
+}
+
+.kvLabel {
+  display: flex;
+  align-items: center;
+
+  padding: 1px 5px;
+  border-inline-end: 1px solid var(--rp-line);
+
+  font-size: 8.5px;
+  font-weight: 700;
+}
+
+.kvValue {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+  padding: 1px 6px;
+
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.boundaryRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr;
+
+  min-height: 20px;
+  border-top: 1px solid var(--rp-line);
+}
+
+/* One question on the row (التعارض مع خط التنظيم) instead of two side by side. */
+.boundaryRowSingle {
+  grid-template-columns: auto 1fr;
+}
+
+.boundaryLabel {
+  display: flex;
+  align-items: center;
+
+  padding: 1px 4px;
+  border-inline-end: 1px solid var(--rp-line);
+
+  font-size: 8px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.boundaryLabelSplit {
+  border-inline-start: 1px solid var(--rp-line);
+}
+
+.boundaryValue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  padding: 1px 2px;
+}
+
+.checks {
+  display: inline-flex;
+  gap: 4px;
+
+  font-size: 7.5px;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.checkBox {
+  display: inline-block;
+
+  width: 7px;
+  height: 7px;
+
+  border: 1px solid var(--rp-ink);
+}
+
+.checkBoxOn {
+  background: var(--rp-ink);
+}
+
+/* Coordinates: rows share whatever height the column has left, so the table always
+ * fits; the font steps down when there are more vertices than the form's 10 rows. */
+/* The two coordinate tables, one under the other, splitting the column's free height. */
+.coordsStack {
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* flex-grow is set inline to the table's row count (IntersectReport.tsx). */
+.coords {
+  flex: 1 1 0;
+
+  display: flex;
+  flex-direction: column;
+
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--rp-line);
+}
+
+.coordsBody {
+  flex: 1;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.coordsRow {
+  flex: 1;
+  /* Never shorter than a line of text — below this the rows print on top of each other. */
+  min-height: 11px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+
+  border-top: 1px solid var(--rp-line);
+
+  font-size: 8.5px;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+
+  > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+  }
+
+  > span + span {
+    border-inline-start: 1px solid var(--rp-line);
+  }
+}
+
+.coordsHead {
+  flex: none;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.coordsCompact .coordsRow {
+  font-size: 7.5px;
+}
+
+.coordsMore {
+  display: flex;
+  justify-content: center;
+
+  grid-template-columns: none;
+}
+
+/* 2 × 2: logo | seal on top, engineer | manager below. */
+.office {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  border: 1px solid var(--rp-line);
+}
+
+.officeBlock {
+  min-width: 0;
+}
+
+/* The divider between the two columns (the first block of each pair sits on the right). */
+.officeBlock:nth-child(odd) {
+  border-inline-end: 1px solid var(--rp-line);
+}
+
+.officeBlock:nth-child(n + 3) {
+  border-top: 1px solid var(--rp-line);
+}
+
+.officeTitle {
+  background: rgba(0, 0, 0, 0.05);
+
+  font-size: 9px;
+}
+
+/* Side by side now, so the two blank boxes share one height. */
+.blankLogo,
+.blankSeal {
+  height: 36px;
+}
+
+.sheetFooter {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 16px;
+
+  height: 16px;
+
+  color: var(--alpha-black-60);
+  direction: rtl;
+  font-size: 8px;
+}
+
+/* Phones: span the width under the header instead of a narrow floating rail. */
+@media (max-width: 768px) {
+  .rail {
+    top: 72px;
+    right: 12px;
+    left: 12px;
+
+    width: auto;
+    max-width: none;
+  }
+
+  .panel {
+    max-height: 50vh;
+  }
+}
+/* ── Pre-export report form ──────────────────────────────────────────────────── */
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--neutral-200);
+  border-radius: 8px;
+}
+
+.formSectionTitle {
+  color: var(--primary-sa-700);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.formLabel {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.formInput {
+  width: 100%;
+  padding: 6px 8px;
+
+  border: 1px solid var(--field-border, var(--neutral-300));
+  border-radius: 6px;
+
+  background: var(--field-bg, var(--base-white));
+  color: var(--text-default, var(--neutral-700));
+
+  font-size: 12px;
+  font-family: inherit;
+  text-align: start;
+
+  &:focus {
+    outline: 2px solid var(--focus-ring, var(--primary-sa-600));
+    outline-offset: 1px;
+  }
+}
+
+/* One row per direction: its name, then الحد and الطول side by side. Stacks on a
+ * narrow screen so neither field is squeezed. */
+.formDirectionRow {
+  display: grid;
+  grid-template-columns: 64px 1fr 1fr;
+  align-items: end;
+  gap: 8px;
+}
+
+.formDirectionLabel {
+  padding-bottom: 7px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .formDirectionRow {
+    grid-template-columns: 1fr;
+  }
+
+  .formDirectionLabel {
+    padding-bottom: 0;
+  }
+}
+
+.formInputError {
+  border-color: var(--red-600);
+}
+
+.formError {
+  color: var(--red-600);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* The measured length, reported beside each direction rather than asked for. */
+.formMeasured {
+  padding-bottom: 7px;
+
+  color: var(--text-secondary);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .formMeasured {
+    padding-bottom: 0;
+  }
+}
+
+/* ── Pre-export form: the three building-photo slots ── */
+.formPhotos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.formPhotoSlot {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.formPhotoPreview {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+
+  border: 1px dashed var(--neutral-300);
+  border-radius: 6px;
+
+  background: var(--neutral-50);
+}
+
+.formPhotoPreviewError {
+  border-color: var(--red-600);
+}
+
+.formPhotoImage {
+  object-fit: cover;
+}
+
+.formPhotoEmpty {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.formPhotoActions {
+  display: flex;
+  gap: 8px;
+
+  font-size: 11px;
+}
+
+.formPhotoPick,
+.formPhotoRemove {
+  padding: 0;
+  border: 0;
+
+  background: none;
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.formPhotoPick {
+  color: var(--primary-sa-700);
+}
+
+.formPhotoRemove {
+  color: var(--red-600);
+}
+
+@media (max-width: 640px) {
+  .formPhotos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* A building photo on the sheet: fills its box edge to edge, cropped rather than squashed. */
+.photoFilled {
+  position: relative;
+
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Absolutely filled, like the aerial svg, so the photo's own size can never grow the row. */
+.photoFilledImage {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+/* The باركود box once a QR has been generated: the code fills it, squared and centred. */
+.qrBox {
+  padding: 4px;
+}
+
+.qrImage {
+  display: block;
+
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}

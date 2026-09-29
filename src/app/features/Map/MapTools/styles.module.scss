@@ -1,0 +1,103 @@
+.map-tools {
+  max-width: calc(75vw);
+
+  // 75vw of a ~390px phone is ~290px — too narrow for the 3 Arabic tab labels, so the last
+  // one (الإفادات) rendered past the edge of the screen. Give the bar the full safe width
+  // instead; desktop (>640px) is unaffected and keeps the 75vw/centered look above.
+  @media (max-width: 640px) {
+    max-width: calc(100vw - 24px);
+  }
+}
+
+.dockBar {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  min-width: 0; // let children (esp. .tabs) actually shrink instead of forcing overflow
+}
+
+.spacer {
+  flex: 1 1 auto;
+
+  // These only exist to center .tabs when the bar has room to spare. On phones every pixel
+  // is needed by the tabs themselves, so stop the spacers from eating into that width.
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+.tabs {
+  display: flex;
+
+  justify-content: safe center;
+  gap: var(--mantine-spacing-sm);
+  min-width: 0;
+  & > * {
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: 640px) {
+    width: 100%;
+    gap: var(--mantine-spacing-xs);
+    // Safety net: even with the extra width above, this guarantees a tab can scroll into
+    // view instead of silently clipping off-screen again on very small/zoomed devices.
+    overflow-x: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.dockDivider {
+  width: 1px;
+  height: 24px;
+  background: var(--mantine-color-gray-3);
+  flex-shrink: 0;
+}
+
+.discardPill {
+  flex-shrink: 0;
+}
+
+.expandedPanel {
+  padding-bottom: var(--mantine-spacing-sm);
+  margin-bottom: var(--mantine-spacing-sm);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+}
+
+.tools {
+  display: flex;
+  gap: var(--mantine-spacing-sm);
+  & > * {
+    flex: 0 0 auto;
+  }
+  & > *:first-child {
+    margin-inline-start: auto;
+  }
+  & > *:last-child {
+    margin-inline-end: auto;
+  }
+}
+
+.subTools {
+  display: flex;
+  justify-content: safe center;
+  gap: var(--mantine-spacing-sm);
+  padding-bottom: var(--mantine-spacing-sm);
+  margin-bottom: var(--mantine-spacing-sm);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+  overflow-y: unset;
+  overflow-x: auto;
+
+  & > * {
+    flex: 0 0 auto;
+    margin-inline: 0;
+  }
+  & > *:first-child {
+    margin-inline-start: 0;
+  }
+  & > *:last-child {
+    margin-inline-end: 0;
+  }
+}

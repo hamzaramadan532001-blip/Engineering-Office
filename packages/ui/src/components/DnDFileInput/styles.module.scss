@@ -1,0 +1,15 @@
+.dndFileInput {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--neutral-100);
+  outline: 1.5px dashed var(--mantine-color-gray-6);
+  outline-offset: -2px;
+  border-radius: var(--mantine-radius-md);
+  cursor: pointer;
+  padding: var(--mantine-spacing-md); 
+  input{
+    display: none;
+  }
+}

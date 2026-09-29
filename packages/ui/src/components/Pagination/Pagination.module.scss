@@ -1,0 +1,27 @@
+/* Doubled classes: Mantine's own Pagination rules ship in the same layer and may
+   be emitted after this module, so equal specificity would lose on source order. */
+.control.control {
+  border-color: var(--border-default);
+  background-color: var(--surface-page);
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-sm-size);
+  color: var(--text-paragraph);
+
+  &:hover:not([data-active]):not(:disabled) {
+    background-color: var(--surface-muted);
+  }
+
+  &[data-active] {
+    border-color: var(--primary-sa-600);
+    background-color: var(--primary-sa-600);
+    color: var(--text-oncolor);
+  }
+
+  &:disabled {
+    color: var(--text-disabled);
+  }
+}
+
+.dots.dots {
+  color: var(--text-secondary);
+}

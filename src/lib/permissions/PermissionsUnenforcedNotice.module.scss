@@ -1,0 +1,12 @@
+/** Standing notice that gating is off — same slot as the error notice (they never
+    co-exist: a failed load enforces again). Click-through, so it blocks no map work. */
+.root {
+  position: fixed;
+  top: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1300; // above the tool panels (1200), below modals
+  max-width: min(520px, calc(100vw - var(--space-8)));
+  text-align: right;
+  pointer-events: none;
+}

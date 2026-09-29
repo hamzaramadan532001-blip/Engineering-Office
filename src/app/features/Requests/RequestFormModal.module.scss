@@ -1,0 +1,57 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 4px);
+}
+
+.label {
+  font-size: var(--typo-text-sm-size, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--text-default, var(--neutral-700));
+}
+
+.textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 90px;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-radius: var(--mantine-radius-sm, 6px);
+  border: 1px solid var(--neutral-100, #e9ecef);
+  background-color: var(--base-white);
+  color: var(--text-default, var(--neutral-700));
+  font: inherit;
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-sa-600);
+  }
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2, 8px);
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-radius: var(--mantine-radius-sm, 6px);
+  border: 1px dashed var(--neutral-100, #e9ecef);
+}
+
+.fileName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.errorText {
+  color: var(--mantine-color-red-6, #e03131);
+}
+
+.successIcon {
+  color: var(--primary-sa-600);
+}

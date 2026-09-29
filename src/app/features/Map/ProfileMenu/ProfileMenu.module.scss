@@ -1,0 +1,275 @@
+/* ===========================================================================
+   Profile menu — floating account control over the map.
+   Figma: 1:38342 (collapsed avatar) · 1:38349 (open dropdown) · 1:39458 (back bar)
+=========================================================================== */
+
+/* ─── Floating anchor (explorer view) ─── */
+.root {
+  position: fixed;
+  top: 16px;
+  left: 16px; /* opposite the top-right brand logo */
+  z-index: 1000;
+
+  /* On mobile the logo becomes a full-width header bar (see .logoSlot in
+   * Map.module.scss). Center the avatar inside that bar instead of letting
+   * it hang below its bottom edge into the icon row underneath. */
+  @media (max-width: 640px) {
+    top: 11px;
+    left: 15px;
+
+  }
+}
+
+
+
+/* ─── Collapsed avatar (1:38342) ─── */
+.avatarButton {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 3px solid var(--border-primary);
+  border-radius: var(--mantine-radius-md);
+  background: transparent;
+  overflow: hidden;
+  line-height: 0;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    transform: scale(1.04);
+    box-shadow: var(--shadow-lg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--border-primary);
+    outline-offset: 2px;
+  }
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--mantine-radius-md) - 3px);
+}
+
+/* ─── Open dropdown (1:38349) ─── */
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--mantine-radius-md);
+  background: var(--surface-panel);
+  box-shadow: var(--shadow-lg);
+}
+
+.item {
+  /* full-bleed hover row while keeping content aligned to the panel padding */
+  margin: 0 -12px;
+  padding: 0 12px;
+  border-radius: 0;
+  min-height: 20px;
+  color: var(--text-default);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+
+  &:hover,
+  &[data-hovered] {
+    background: var(--neutral-50);
+  }
+}
+
+/* destructive action — color cascades to the icon via currentColor */
+.danger {
+  color: var(--red-600);
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* RTL: the first child (icon) sits at the start = far right */
+}
+
+.itemIcon {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+}
+
+.itemLabel {
+  white-space: nowrap;
+}
+
+.divider {
+  margin: 0;
+  border-top-color: var(--neutral-200);
+}
+
+/* ─── Mobile bottom sheet (Figma "Home Mobile - menu") ─── */
+.sheetOverlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Mantine's Modal centers .content inside a flex `inner` wrapper; pinning
+ * this to the start of that flex line drops the card flush against the top
+ * of the screen, matching the Figma layout, instead of the middle/bottom. */
+.sheetInner {
+  padding: 0;
+  
+}
+
+
+.sheetContent {
+  align-self: flex-start;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 2px 5px;
+  border-radius:0 0 50px 50px;
+}
+
+
+.sheetBody {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+}
+
+.sheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.sheetLogo {
+  display: inline-flex;
+}
+
+.sheetLogoImg {
+  display: block;
+  object-fit: contain;
+}
+
+.sheetLogoDark {
+  display: none;
+}
+
+:global(html[data-mantine-color-scheme="dark"]) {
+  .sheetLogoLight {
+    display: none;
+  }
+
+  .sheetLogoDark {
+    display: block;
+  }
+}
+
+.sheetClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-default);
+  cursor: pointer;
+}
+
+.sheetDivider {
+  height: 1px;
+  background: var(--neutral-200);
+}
+
+.sheetItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 2px 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: start;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* ─── Dashboard "back to explorer" bar (1:39458) ─── */
+.backBar {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+
+  border: none;
+  border-radius: var(--mantine-radius-md);
+  background: var(--surface-panel);
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  transition: box-shadow 0.15s ease;
+
+  &:hover {
+    box-shadow: var(--shadow-xl);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--border-primary);
+    outline-offset: 2px;
+  }
+}
+
+.backAvatar {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--mantine-radius-sm);
+  object-fit: cover;
+}
+
+.backDivider {
+  flex: 0 0 auto;
+  width: 1px;
+  height: 20px;
+  background: var(--neutral-200);
+}
+
+.backTextGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.backText {
+  color: var(--text-default);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.backIcon {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  color: var(--icon-default);
+}

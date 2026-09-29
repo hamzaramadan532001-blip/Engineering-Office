@@ -1,0 +1,32 @@
+/* Doubled class: Mantine's own Drawer rules ship in the same layer and may be
+   emitted after this module, so equal specificity would lose on source order. */
+.body.body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0;
+  text-align: start;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-4);
+  color: var(--text-paragraph);
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+}
+
+.footer {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  background-color: var(--surface-page);
+}

@@ -1,0 +1,20 @@
+@use "./vendors/esri" as *;
+// colors
+@use "./colors/primitives" as *;
+@use "./colors/vendor" as *;
+// design tokens (semantic must come after primitives — it aliases them)
+@use "./tokens/radius" as *;
+@use "./tokens/typography" as *;
+@use "./tokens/spacing" as *;
+@use "./tokens/shadows" as *;
+@use "./tokens/semantic" as *;
+// themes (must come after the tokens they override)
+@use "./themes/dark" as *;
+// base
+@use "./base/scrollbar" as *;
+
+// Scoped to an RTL root so LTR locales inherit normally. Inside <html dir="rtl">
+// this matches every element, preserving the previous global behaviour.
+[dir="rtl"] * {
+    direction: rtl;
+}

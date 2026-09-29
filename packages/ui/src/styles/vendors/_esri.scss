@@ -1,0 +1,67 @@
+[data-slot-bottom-center] {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    // The dock is rendered as a sibling of <arcgis-map> (not nested inside it), so it shares the
+    // stacking context of the dashboard's overlay panels (z-index:10) instead of being trapped in
+    // the map's own context. This z-index then lifts it above those panels — and above the compare
+    // swipe, which lives inside <arcgis-map> — while staying below floating menus/modals (z-index:1000+).
+    z-index: 20;
+}
+
+/**
+ * The app loads no ArcGIS/Calcite stylesheet, so the `<arcgis-swipe>` / `<arcgis-scale-bar>`
+ * web components have no values for the Calcite design tokens their shadow DOM references.
+ * Without `--calcite-spacing-xxxl` the swipe handle's position math (`calc(50% - …)`) is
+ * invalid and the handle collapses — most visibly the round handle vanishes in vertical mode.
+ * Define the tokens on the element tags (custom properties inherit through the shadow
+ * boundary). Tag selectors are used on purpose: React doesn't reliably map `className` to a
+ * custom element's `class`, and a tag selector also beats the global `* { direction: rtl }`.
+ * Colours come from the design system (no raw hex outside token files); the rest are lengths.
+ */
+arcgis-swipe {
+    // ArcGIS built the swipe to operate LTR (its own CSS opts out of the map's RTL); pin it so
+    // the global `* { direction: rtl }` doesn't mirror the handle/divider math.
+    direction: ltr;
+    --calcite-spacing-xxxl: 40px; // grab-handle diameter + the divider/handle centering math
+    --calcite-border-width-sm: 1px;
+    --calcite-border-width-lg: 4px; // divider line thickness
+    --calcite-corner-radius-round: 9999px; // round handle
+    --calcite-color-background: var(--surface-panel); // handle + divider fill
+    --calcite-color-border-1: var(--neutral-300);
+    --calcite-color-text-3: var(--neutral-500); // the "|||" grip glyph
+    --calcite-color-brand: var(--primary-sa-600); // focus ring
+    --calcite-color-focus: var(--primary-sa-600);
+}
+
+arcgis-scale-bar {
+    // Same missing-token story; the larger base font keeps the distance readout legible.
+    --calcite-font-size: 16px;
+    --calcite-font-size-sm: 14px;
+    --calcite-font-size-md: 17px;
+    --calcite-font-weight-regular: 400;
+    --calcite-font-weight-semibold: 600;
+    --calcite-font-line-height-relative-tight: 1.25;
+    --calcite-spacing-xs: 8px;
+    --calcite-spacing-xl: 24px;
+    --calcite-color-foreground-1: var(--surface-panel);
+    --calcite-color-text-1: var(--text-default);
+    --calcite-color-text-2: var(--neutral-700);
+    --calcite-color-text-3: var(--neutral-500);
+    --calcite-color-border-1: var(--neutral-300);
+    --calcite-color-border-input: var(--neutral-400);
+    --calcite-color-brand: var(--primary-sa-600);
+}
+
+arcgis-compass {
+    // White circular face matching the rest of the rail controls; foreground-1 is the
+    // resting fill, foreground-2 the hover fill.
+    --calcite-color-foreground-1: var(--surface-panel);
+    --calcite-color-foreground-2: var(--surface-panel);
+
+    // Calcite paints the needle icon from its own theme; !important is required to beat it.
+    calcite-icon {
+        color: var(--text-default) !important;
+    }
+}

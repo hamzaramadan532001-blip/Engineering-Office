@@ -1,0 +1,254 @@
+:root {
+    /* ===========================
+   ALPHA COLORS
+=========================== */
+
+    /* Yellow Alpha */
+    --alpha-yellow-10: rgba(220, 104, 3, 0.1);
+    --alpha-yellow-20: rgba(220, 104, 3, 0.2);
+
+    /* Primary (SA Flag 600) Alpha */
+    --alpha-primary-10: rgba(27, 131, 84, 0.1);
+    --alpha-primary-20: rgba(27, 131, 84, 0.2);
+    --alpha-primary-30: rgba(27, 131, 84, 0.3);
+    --alpha-primary-40: rgba(27, 131, 84, 0.4);
+    --alpha-primary-50: rgba(27, 131, 84, 0.5);
+    --alpha-primary-60: rgba(27, 131, 84, 0.6);
+    --alpha-primary-70: rgba(27, 131, 84, 0.7);
+    --alpha-primary-80: rgba(27, 131, 84, 0.8);
+    --alpha-primary-90: rgba(27, 131, 84, 0.9);
+    --alpha-primary-100: var(--primary-sa-600);
+
+    /* Black Alpha */
+    --alpha-black-0: rgba(22, 22, 22, 0);
+    --alpha-black-10: rgba(22, 22, 22, 0.1);
+    --alpha-black-20: rgba(22, 22, 22, 0.2);
+    --alpha-black-30: rgba(22, 22, 22, 0.3);
+    --alpha-black-40: rgba(22, 22, 22, 0.4);
+    --alpha-black-50: rgba(22, 22, 22, 0.5);
+    --alpha-black-60: rgba(22, 22, 22, 0.6);
+    --alpha-black-70: rgba(22, 22, 22, 0.7);
+    --alpha-black-80: rgba(22, 22, 22, 0.8);
+    --alpha-black-90: rgba(22, 22, 22, 0.9);
+    --alpha-black-100: #161616;
+
+    /* Blue Alpha */
+    --alpha-blue-10: rgba(21, 112, 239, 0.1);
+    --alpha-blue-20: rgba(21, 112, 239, 0.2);
+
+    /* Green Alpha */
+    --alpha-green-10: rgba(7, 148, 85, 0.1);
+    --alpha-green-20: rgba(7, 148, 85, 0.2);
+
+    /* Red Alpha */
+    --alpha-red-10: rgba(217, 45, 32, 0.1);
+    --alpha-red-20: rgba(217, 45, 32, 0.2);
+
+    /* White Alpha */
+    --alpha-white-0: rgba(255, 255, 255, 0);
+    --alpha-white-10: rgba(255, 255, 255, 0.1);
+    --alpha-white-20: rgba(255, 255, 255, 0.2);
+    --alpha-white-30: rgba(255, 255, 255, 0.3);
+    --alpha-white-40: rgba(255, 255, 255, 0.4);
+    --alpha-white-50: rgba(255, 255, 255, 0.5);
+    --alpha-white-60: rgba(255, 255, 255, 0.6);
+    --alpha-white-70: rgba(255, 255, 255, 0.7);
+    --alpha-white-80: rgba(255, 255, 255, 0.8);
+    --alpha-white-90: rgba(255, 255, 255, 0.9);
+    --alpha-white-100: #FFFFFF;
+
+
+    /* ===========================
+   BASE COLORS
+=========================== */
+
+    --base-black: #161616;
+    --base-white: #FFFFFF;
+
+
+    /* ===========================
+   BLUE SCALE
+=========================== */
+
+    --blue-25: #F5FAFF;
+    --blue-50: #EFF8FF;
+    --blue-100: #D1E9FF;
+    --blue-200: #B2DDFF;
+    --blue-300: #84CAFF;
+    --blue-400: #53B1FD;
+    --blue-500: #2E90FA;
+    --blue-600: #1570EF;
+    --blue-700: #175CD3;
+    --blue-800: #1849A9;
+    --blue-900: #194185;
+    --blue-950: #102A56;
+
+
+    /* ===========================
+   GREEN SCALE
+=========================== */
+
+    --green-25: #F6FEF9;
+    --green-50: #ECFDF3;
+    --green-100: #DCFAE6;
+    --green-200: #ABEFC6;
+    --green-300: #75E0A7;
+    --green-400: #47CD89;
+    --green-500: #17B26A;
+    --green-600: #079455;
+    --green-700: #067647;
+    --green-800: #085D3A;
+    --green-900: #074D31;
+    --green-950: #053321;
+
+
+    /* ===========================
+   NEUTRAL SCALE
+=========================== */
+
+    --neutral-25: #FCFCFD;
+    --neutral-50: #F9FAFB;
+    --neutral-100: #F3F4F6;
+    --neutral-200: #E5E7EB;
+    --neutral-300: #D2D6DB;
+    --neutral-400: #9DA4AE;
+    --neutral-500: #6C737F;
+    --neutral-600: #4D5761;
+    --neutral-700: #384250;
+    --neutral-800: #1F2A37;
+    --neutral-900: #111927;
+    --neutral-950: #0D121C;
+
+
+    /* ===========================
+   PRIMARY (SA FLAG)
+=========================== */
+
+    --primary-sa-25: #F7FDF9;
+    --primary-sa-50: #F3FCF6;
+    --primary-sa-100: #DFF6E7;
+    --primary-sa-200: #B8EACB;
+    --primary-sa-300: #88D8AD;
+    --primary-sa-400: #54C08A;
+    --primary-sa-500: #25935F;
+    --primary-sa-600: #1B8354;
+    --primary-sa-700: #166A45;
+    --primary-sa-800: #14573A;
+    --primary-sa-900: #104631;
+    --primary-sa-950: #092A1E;
+
+
+    /* ===========================
+   RED SCALE
+=========================== */
+
+    --red-25: #FFFBFA;
+    --red-50: #FEF3F2;
+    --red-100: #FEE4E2;
+    --red-200: #FECDCA;
+    --red-300: #FDA29B;
+    --red-400: #F97066;
+    --red-500: #F04438;
+    --red-600: #D92D20;
+    --red-700: #B42318;
+    --red-800: #912018;
+    --red-900: #7A271A;
+    --red-950: #55160C;
+
+
+    /* ===========================
+   GOLD (SECONDARY)
+=========================== */
+
+    --gold-25: #FFFEF7;
+    --gold-50: #FFFEF2;
+    --gold-100: #FFFCE6;
+    --gold-200: #FCF3BD;
+    --gold-300: #FAE996;
+    --gold-400: #F7D54D;
+    --gold-500: #F5BD02;
+    --gold-600: #DBA102;
+    --gold-700: #B87B02;
+    --gold-800: #945C01;
+    --gold-900: #6E3C00;
+    --gold-950: #472400;
+
+
+    /* ===========================
+   LAVENDER (TERTIARY)
+=========================== */
+
+    --lavender-25: #FEFCFF;
+    --lavender-50: #F9F5FA;
+    --lavender-100: #F2E9F5;
+    --lavender-200: #E1CCE8;
+    --lavender-300: #CCADD9;
+    --lavender-400: #A57BBA;
+    --lavender-500: #80519F;
+    --lavender-600: #6D428F;
+    --lavender-700: #532D75;
+    --lavender-800: #3D1D5E;
+    --lavender-900: #281047;
+    --lavender-950: #16072E;
+
+
+    /* ===========================
+   YELLOW SCALE
+=========================== */
+
+    --yellow-25: #FFFCF5;
+    --yellow-50: #FFFAEB;
+    --yellow-100: #FEF0C7;
+    --yellow-200: #FEDF89;
+    --yellow-300: #FEC84B;
+    --yellow-400: #FDB022;
+    --yellow-500: #F79009;
+    --yellow-600: #DC6803;
+    --yellow-700: #B54708;
+    --yellow-800: #93370D;
+    --yellow-900: #7A2E0E;
+    --yellow-950: #4E1D09;
+
+
+    /* ===========================
+   SURFACE TINTS
+   Off-scale chrome backgrounds from the admin design. Not part of a ramp —
+   reference them through the semantic aliases, never directly.
+=========================== */
+
+    --tint-sage-50: #DDE8E5;       /* admin top bar */
+--tint-green-50: #0794551A;
+
+    /* ===========================
+   CHART / DATA-VIZ
+   Categorical palette for dashboard charts. Off-scale brand greens + status
+   hues that don't map to the steps above. Reference via var(--chart-*) — never
+   inline raw hex in app code.
+=========================== */
+
+    --chart-emerald: #2DA66F;      /* medium green — positive / done / active */
+    --chart-pine: #03542B;         /* deep green — executed / plan 2025 */
+    --chart-pine-soft: #03542B26;  /* deep green @ 15% — not executed */
+    --chart-sage: #A8CFBC;         /* muted green — hard to execute */
+    --chart-slate: #6B7A8D;        /* slate — unknown / unspecified */
+    --chart-mist: #B0BEC5;         /* light grey — vacant / not yet */
+    --chart-ink: #263238;          /* charcoal — expired / terminal (darkest grey step) */
+    --chart-orange: #EF6C00;       /* orange — warning step between amber and red */
+    --chart-plum: #7B4FB5;         /* purple — cancelled / withdrawn */
+    --chart-danger: #D32F2F;       /* red — banned / rejected */
+
+    /* Categorical series, assigned in fixed order (never cycled, never by rank).
+       Hues spread around the wheel with alternating lightness so any two
+       neighbours (and any two slices of one pie) stay distinguishable. */
+    --chart-cat-1: #1B8354;        /* green (brand) */
+    --chart-cat-2: #1F6FB2;        /* blue */
+    --chart-cat-3: #E07B00;        /* orange */
+    --chart-cat-4: #8E44AD;        /* purple */
+    --chart-cat-5: #00ACC1;        /* cyan */
+    --chart-cat-6: #C2185B;        /* magenta */
+    --chart-cat-7: #F2B705;        /* yellow */
+    --chart-cat-8: #6D4C41;        /* brown */
+    --chart-cat-9: #7CB342;        /* lime */
+    --chart-cat-10: #5C6BC0;       /* indigo */
+
+}

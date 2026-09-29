@@ -1,0 +1,194 @@
+.hiddenInput {
+  display: none;
+}
+
+.tabs {
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--neutral-300);
+  padding-bottom: 8px;
+}
+
+.tab {
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+
+  background: transparent;
+  color: var(--text-secondary);
+
+  font-size: 12px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.tab:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.tab:hover:not(:disabled):not(.tabActive) {
+  background: var(--surface-muted);
+}
+
+.tabActive {
+  border-color: var(--primary-sa-600);
+  background: var(--primary-sa-50);
+  color: var(--primary-sa-700);
+}
+
+.sectionHeading {
+  color: var(--text-secondary);
+}
+
+.fileRow {
+  align-items: center;
+}
+
+.fileName {
+  flex: 1;
+  min-width: 0;
+
+  padding: 6px 10px;
+  border: 1px solid var(--field-border, var(--neutral-300));
+  border-radius: 6px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coordinateSelect {
+  flex: 1;
+  min-width: 0;
+}
+
+.tableWrap {
+  position: relative;
+
+  max-height: 180px;
+  overflow-y: auto;
+
+  border: 1px solid var(--neutral-300);
+  border-radius: 6px;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-sa-600) var(--neutral-300);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  font-size: 12px;
+  text-align: center;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+
+  padding: 8px 6px;
+
+  background: var(--surface-muted);
+  color: var(--text-default);
+  font-weight: 600;
+
+  border-bottom: 1px solid var(--neutral-300);
+}
+
+.table tbody td {
+  padding: 6px;
+  border-bottom: 1px solid var(--neutral-200);
+  color: var(--text-default);
+  unicode-bidi: plaintext; // numeric coordinates read LTR inside an RTL table
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.emptyTable {
+  padding: 20px 8px;
+}
+
+.styleControls {
+  padding-top: 4px;
+  border-top: 1px solid var(--neutral-300);
+}
+
+.styleField {
+  flex: 1;
+  min-width: 0;
+}
+
+.numberField,
+.colorField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.numberField input[type="number"] {
+  width: 100%;
+  padding: 5px 8px;
+
+  border: 1px solid var(--field-border, var(--neutral-300));
+  border-radius: 6px;
+
+  font-size: 12px;
+}
+
+.colorField {
+  align-items: center;
+}
+
+.colorField input[type="color"] {
+  width: 32px;
+  height: 24px;
+  padding: 0;
+
+  border: 1px solid var(--field-border, var(--neutral-300));
+  border-radius: 4px;
+
+  cursor: pointer;
+}
+
+.actionsRow {
+  padding-top: 4px;
+}
+
+.actionsRow > * {
+  flex: 1;
+}
+
+.message {
+  padding: 8px 10px;
+  border-radius: 6px;
+
+  background: var(--primary-sa-50, #f0fdf4);
+  color: var(--primary-sa-700, #166534);
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.error {
+  padding: 8px 10px;
+  border-radius: 6px;
+
+  background: var(--red-50);
+  color: var(--red-600);
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  white-space: pre-line;
+}

@@ -1,0 +1,66 @@
+/* ===========================================================================
+   SEMANTIC COLOR ALIASES
+   Source: Figma "Holy Makkah Municipality (3)" — Text/Icon/Border/Form/Button vars.
+   These map *intent* onto the primitive scales in colors/_primitives.scss so
+   components reference meaning (--text-default) not raw steps (--base-black).
+   [figma] = exact value confirmed in Figma variables.
+   [derived] = sensible default following the same scale (verify against design).
+=========================================================================== */
+:root {
+  /* --- Text --- */
+  --text-default: var(--base-black);          /* #161616  [figma] Text/text-default */
+  --text-paragraph: var(--neutral-700);       /* #384250  [figma] Text/text-primary-paragraph */
+  --text-placeholder: var(--neutral-500);     /* #6C737F  [figma] Form/field-text-placeholder */
+  --text-oncolor: var(--base-white);          /* #FFFFFF  [figma] Text/text-oncolor-primary */
+  --text-secondary: var(--neutral-500);       /* [derived] */
+  --text-disabled: var(--neutral-400);        /* [derived] */
+
+  /* --- Icon --- */
+  --icon-default: var(--base-black);          /* #161616  [figma] Icon/icon-default */
+  --icon-neutral: var(--neutral-700);         /* #384250  [figma] Icon/icon-neutral */
+  --icon-oncolor: var(--base-white);          /* [derived] */
+
+  /* --- Border --- */
+  --border-primary: var(--primary-sa-600);    /* #1B8354  [figma] Border/border-primary */
+  --border-default: var(--neutral-200);       /* [derived] */
+  --border-subtle: var(--neutral-100);        /* [derived] */
+
+  /* --- Surfaces --- */
+  --surface-page: var(--base-white);          /* [derived] */
+  --surface-panel: var(--base-white);         /* floating tool/layer panels */
+  --surface-muted: var(--neutral-50);         /* [derived] */
+  --surface-dark: var(--base-black);          /* #161616  dark dock / dark theme */
+  --surface-auth: var(--neutral-25);           /* #FCFCFD  [figma] auth form panel */
+  --surface-topbar: var(--tint-sage-50);       /* #DDE8E5  [figma] admin top bar */
+  --surface-content: var(--neutral-100);       /* #F3F4F6  [figma] admin content area */
+  --surface-brand: var(--green-900);           /* #074D31  [figma] auth panel / admin nav drawer */
+  --surface-brand-hover: var(--green-800);     /* #085D3A  [derived] nav item hover */
+  --surface-brand-active: var(--primary-sa-700);/* #166A45 [figma] nav item selected */
+
+  /* --- Form fields --- */
+  --field-label: var(--base-black);           /* #161616  [figma] Form/field-text-label */
+  --field-bg: var(--base-white);              /* [derived] */
+  --field-bg-darker: var(--neutral-100);      /* #F3F4F6  [figma] Form/field-background-darker */
+  --field-border: var(--neutral-300);         /* [derived] */
+  --field-border-focus: var(--primary-sa-600);/* [derived] */
+
+  /* --- Buttons (primary) --- */
+  --button-bg-primary: var(--primary-sa-600);       /* #1B8354  [figma] */
+  --button-bg-primary-hover: var(--primary-sa-700); /* [derived] */
+  --button-bg-primary-active: var(--primary-sa-800);/* [derived] */
+  --button-fg-primary: var(--base-white);           /* [derived] */
+  --button-bg-disabled: var(--neutral-100);         /* [derived] */
+  --button-fg-disabled: var(--neutral-400);         /* [derived] */
+
+  /* --- Status (from dashboard permit states) --- */
+  --status-approved: var(--primary-sa-600);   /* معتمد   [derived→green] */
+  --status-pending: var(--gold-600);          /* قيد الدراسة [derived→gold] */
+  --status-rejected: var(--red-600);          /* مرفوض   [derived→red] */
+  --status-suspended: var(--neutral-500);     /* موقوف   [derived→neutral] */
+
+  /* --- Favorite (love) --- */
+  --favorite: var(--red-500);                 /* active heart [derived→red] */
+
+  /* --- Focus ring --- */
+  --focus-ring: var(--alpha-primary-30);
+}

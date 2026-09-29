@@ -1,0 +1,27 @@
+/* Doubled classes: Mantine's own Accordion rules ship in the same layer and may
+   be emitted after this module, so equal specificity would lose on source order. */
+.item.item {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.control.control {
+  padding: var(--space-3) var(--space-2);
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-default);
+  text-align: start;
+
+  &:hover {
+    background-color: var(--surface-muted);
+  }
+}
+
+.panel.panel {
+  color: var(--text-paragraph);
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  text-align: start;
+}

@@ -1,0 +1,50 @@
+/* Doubled class: Mantine's own Alert rules ship in the same layer and may be
+   emitted after this module, so equal specificity would lose on source order. */
+.alert.alert {
+  border: 1px solid transparent;
+  background-color: var(--surface-muted);
+  text-align: start;
+
+  &[data-variant="info"] {
+    --alert-accent: var(--blue-700);
+    background-color: var(--blue-50);
+    border-color: var(--blue-200);
+  }
+
+  &[data-variant="success"] {
+    --alert-accent: var(--green-700);
+    background-color: var(--green-50);
+    border-color: var(--green-200);
+  }
+
+  &[data-variant="warning"] {
+    --alert-accent: var(--yellow-700);
+    background-color: var(--yellow-50);
+    border-color: var(--yellow-200);
+  }
+
+  &[data-variant="danger"] {
+    --alert-accent: var(--red-700);
+    background-color: var(--red-50);
+    border-color: var(--red-200);
+  }
+}
+
+.title.title {
+  color: var(--alert-accent, var(--text-default));
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  font-weight: var(--font-weight-bold);
+}
+
+.icon.icon {
+  color: var(--alert-accent, var(--icon-neutral));
+}
+
+.message.message {
+  color: var(--text-paragraph);
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+}

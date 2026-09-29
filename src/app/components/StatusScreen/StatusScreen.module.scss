@@ -1,0 +1,120 @@
+// Full-page status screen (404 / 500 / 401 / 403): brand-green page, centered
+// white card. Deliberately dependency-free — it also renders from global-error,
+// where the root layout (and its font) is gone.
+$mobile: 480px;
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: var(--space-6) var(--space-4);
+  background-color: var(--surface-brand);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 30rem;
+  padding: var(--space-10) var(--space-8);
+  border-radius: var(--mantine-radius-lg);
+  background-color: var(--surface-panel);
+  box-shadow: var(--shadow-3xl);
+  text-align: center;
+
+  @media (max-width: $mobile) {
+    padding: var(--space-8) var(--space-5);
+  }
+}
+
+.logo {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: var(--space-2);
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: 50%;
+}
+
+/* --- Tones (see StatusTone in constants.ts) --- */
+.neutral {
+  background-color: var(--neutral-100);
+  color: var(--icon-neutral);
+}
+
+.warning {
+  background-color: var(--alpha-yellow-10);
+  color: var(--status-pending);
+}
+
+.danger {
+  background-color: var(--alpha-red-10);
+  color: var(--status-rejected);
+}
+
+.code {
+  margin: 0;
+  font-family: var(--font-family-display);
+  font-size: var(--typo-display-lg-size);
+  line-height: var(--typo-display-lg-line);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--typo-display-lg-tracking);
+  color: var(--text-disabled);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-display);
+  font-size: var(--typo-display-xs-size);
+  line-height: var(--typo-display-xs-line);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-default);
+}
+
+.message {
+  margin: 0;
+  max-width: 26rem;
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-md-size);
+  line-height: var(--typo-text-md-line);
+  color: var(--text-paragraph);
+}
+
+.reference {
+  margin: 0;
+  font-family: var(--font-family-text);
+  font-size: var(--typo-text-xs-size);
+  line-height: var(--typo-text-xs-line);
+  color: var(--text-secondary);
+
+  code {
+    // Digest is an opaque ASCII hash — keep it LTR inside the RTL sentence.
+    direction: ltr;
+    unicode-bidi: isolate;
+    padding: 0 var(--space-1);
+    border-radius: var(--mantine-radius-sm);
+    background-color: var(--surface-muted);
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+
+  @media (max-width: $mobile) {
+    width: 100%;
+    flex-direction: column;
+  }
+}

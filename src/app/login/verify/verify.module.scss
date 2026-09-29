@@ -1,0 +1,139 @@
+/* Middle content of the Nafath verify screen.
+   The two-panel shell + footer come from AuthShell / login.module.scss. */
+.verify {
+  width: 100%;
+  max-width: 378px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.headingBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: right;
+}
+
+.heading {
+  margin: 0;
+  font-size: 20px;
+  line-height: var(--typo-display-xs-line);
+  font-weight: var(--font-weight-bold);
+  color: #1a1a1a;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: var(--typo-text-md-size);
+  line-height: var(--typo-text-md-line);
+  font-weight: var(--font-weight-medium);
+  color: #8c8c8c;
+}
+
+/* --- Matching number --- */
+.numberBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.numberLabel,
+.numberHint {
+  margin: 0;
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  font-weight: var(--font-weight-medium);
+  color: #8c8c8c;
+}
+
+.number {
+  margin: 0;
+  font-family: var(--font-family-display);
+  font-size: 72px;
+  line-height: 90px;
+  font-weight: 600;
+  letter-spacing: -1.44px;
+  color: var(--button-bg-primary); /* #1B8354 */
+}
+
+/* --- Waiting status --- */
+.statusBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.rule {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 20px;
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  font-weight: var(--font-weight-medium);
+}
+
+.statusText {
+  color: var(--text-default);
+}
+.statusOk {
+  color: var(--button-bg-primary);
+}
+.statusErr {
+  color: var(--status-rejected);
+}
+
+/* --- Actions row --- */
+.actionsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: var(--typo-text-xs-size);
+  line-height: var(--typo-text-xs-line);
+  font-weight: var(--font-weight-medium);
+}
+
+.resend {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--button-bg-primary);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+    border-radius: var(--mantine-radius-sm);
+  }
+}
+
+.validity {
+  color: var(--text-default);
+}
+
+.timer {
+  color: var(--button-bg-primary);
+  font-variant-numeric: tabular-nums;
+}

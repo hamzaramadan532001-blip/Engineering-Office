@@ -1,0 +1,7 @@
+packages:
+  - "packages/*"
+allowBuilds:
+  '@parcel/watcher': true
+  '@vaadin/vaadin-usage-statistics': false
+  core-js: false
+  sharp: false

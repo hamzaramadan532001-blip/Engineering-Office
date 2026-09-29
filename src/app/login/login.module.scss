@@ -1,0 +1,354 @@
+$desktop: 1024px;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  min-height: 100dvh;
+  background-color: #f1f1f1;
+
+  @media (min-width: $desktop) {
+    flex-direction: row;
+    direction: ltr;
+  }
+}
+
+/* ---------- Hero ---------- */
+.heroPanel {
+  direction: rtl;
+  position: relative;
+  order: -1;
+  flex: 0 0 auto;
+  min-height: 260px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #0f3d2e 0%, #123524 100%);
+  display: flex; // lets .heroContent stretch to full panel height
+  padding: 24px 20px;
+
+  @media (min-width: $desktop) {
+    order: 0;
+    flex: 1;
+    min-height: 100dvh;
+    padding: 48px 80px;
+  }
+}
+
+/* Fills the panel; logo is pinned to its top edge, body is centered
+   vertically within whatever space is left. */
+.heroContent {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // vertically centers .heroBody
+}
+
+.heroLogo {
+  position: absolute;
+  top: 0;
+  right: 0; // sits at the panel's padding edge — no extra offset needed
+  display: flex;
+}
+
+.heroBody {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 100%;
+
+  @media (min-width: $desktop) {
+    gap: 40px;
+    max-width: 640px;
+  }
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: right;
+}
+
+.heroTitle {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-bold);
+  font-size: 26px;
+  line-height: 1.25;
+
+  @media (min-width: $desktop) {
+    font-size: 44px;
+  }
+}
+
+.heroSubtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: var(--typo-text-md-size);
+  line-height: var(--typo-text-md-line);
+  font-weight: var(--font-weight-medium);
+}
+
+.featureList {
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: $desktop) {
+    display: flex;
+  }
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.featureIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.featureText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+
+.featureTitle {
+  color: #fff;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--typo-text-md-size);
+  line-height: var(--typo-text-md-line);
+}
+
+.featureDesc {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+}
+
+/* Decorative circles + copyright: desktop hero only. */
+.circle,
+.copyright {
+  display: none;
+}
+
+@media (min-width: $desktop) {
+  .circle {
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .copyright {
+    display: block;
+    position: absolute;
+    inset-inline: 48px;
+    bottom: 48px;
+    margin: 0;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: var(--typo-text-xs-size);
+  }
+}
+
+
+
+/* ---------- Form panel / sheet ---------- */
+.formPanel {
+  direction: rtl;
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fbfcfc;
+  margin-top: -24px;
+  padding: 28px 20px;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.08);
+
+  @media (min-width: $desktop) {
+    flex: 0 0 clamp(460px, 38%, 600px);
+    min-height: 100dvh;
+    margin-top: 0;
+    padding: 56px 48px;
+    border-radius: 0;
+    box-shadow: -8px 0 20px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.formTop {
+  display: none;
+
+  @media (min-width: $desktop) {
+    display: flex;
+    direction: ltr;
+    justify-content: flex-start;
+  }
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 378px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.helperText {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-paragraph);
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.brandBlock {
+  display: none;
+
+  @media (min-width: $desktop) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.productTitle {
+  margin: 0;
+  font-family: var(--font-family-display);
+  font-size: var(--typo-display-xs-size);
+  line-height: var(--typo-display-xs-line);
+  font-weight: var(--font-weight-bold);
+  color: #1a1a1a;
+  text-align: right;
+}
+
+.headingBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: right;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  align-self: flex-start;
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  border: none;
+  background: none;
+  color: #8c8c8c;
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+
+  &:hover {
+    color: #1a1a1a;
+  }
+}
+
+.submittedBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  padding: var(--space-6) 0;
+}
+
+.submittedIcon {
+  color: var(--button-bg-primary);
+  margin-bottom: var(--space-2);
+}
+
+.heading {
+  margin: 0;
+  font-size: 20px;
+  line-height: var(--typo-display-xs-line);
+  font-weight: var(--font-weight-bold);
+  color: #1a1a1a;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: var(--typo-text-md-size);
+  line-height: var(--typo-text-md-line);
+  font-weight: var(--font-weight-medium);
+  color: #8c8c8c;
+}
+
+.submitError {
+  margin: 0;
+  color: var(--status-rejected);
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  text-align: right;
+}
+
+.secureNote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  color: #8c8c8c;
+  font-size: var(--typo-text-xs-size);
+  line-height: var(--typo-text-xs-line);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: #8c8c8c;
+  font-size: var(--typo-text-xs-size);
+  line-height: var(--typo-text-xs-line);
+  font-weight: var(--font-weight-medium);
+}
+
+.dot {
+  color: #bfbfbf;
+}
+
+/* "مرحباً {اسم المكتب}" — shown for the moment between a successful office sign-in and
+ * the navigation to the main page. */
+.welcomeNote {
+  margin: 0;
+  padding: 10px 12px;
+
+  border: 1px solid var(--primary-sa-600);
+  border-radius: 8px;
+
+  background: var(--primary-sa-50, var(--surface-muted));
+  color: var(--primary-sa-700);
+
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}

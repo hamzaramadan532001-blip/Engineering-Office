@@ -1,0 +1,471 @@
+.mapControlsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 15px;
+  z-index: 99;
+
+  &.dashboardMode {
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+
+    :global(arcgis-zoom) {
+      margin-right: 20px;
+      transform: rotate(-90deg) !important;
+
+      :global(.esri-widget--button) {
+        transform: rotate(90deg) !important;
+      }
+    }
+  }
+
+  /*
+   * Desktop ArcGIS zoom.
+   * On mobile the zoom is rendered inside .mobileIconsTopRight
+   * next to Home and Locate.
+   *
+   * Note: hides the `arcgis-zoom` element itself, not its inner `.esri-zoom`
+   * class — `@arcgis/map-components` are Stencil web components that render
+   * into a shadow root, so a light-DOM class selector like `.esri-zoom`
+   * can never reach it and silently does nothing (that's why this duplicate
+   * zoom kept showing up bottom-right on mobile despite this rule already
+   * existing).
+   */
+  @media (max-width: 640px) {
+    &:not(.dashboardMode) {
+      margin: 0;
+
+      :global(arcgis-zoom) {
+        display: none;
+      }
+    }
+  }
+
+  /*
+   * ArcGIS controls styling.
+   */
+  :global(.esri-zoom),
+  :global(.esri-navigation-toggle) {
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  :global(.esri-zoom .esri-widget--button),
+  :global(.esri-navigation-toggle .esri-widget--button) {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    background-color: var(--base-white);
+    color: var(--neutral-700);
+
+    &:hover {
+      background-color: var(--neutral-100);
+    }
+  }
+
+}
+
+
+.logoSlot {
+  padding: 8px;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+
+.mobileHeader {
+  display: none;
+
+  @media (max-width: 640px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+
+    padding: 14px 15px;
+    z-index: 100;
+
+    display: flex;
+
+    background-color: var(--base-white);
+    box-shadow: 0 1px 4px
+      var(--alpha-black-30, rgba(0, 0, 0, 0.15));
+  }
+}
+
+.logoBox {
+  @media (max-width: 640px) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+.logoImage {
+  display: block;
+  object-fit: contain;
+
+  @media (max-width: 640px) {
+    width: 170px;
+    height: 42px;
+    object-fit: contain;
+  }
+}
+
+
+.logoImageDark {
+  display: none;
+}
+
+:global(html[data-mantine-color-scheme="dark"]) {
+  .logoImageLight {
+    display: none;
+  }
+
+  .logoImageDark {
+    display: block;
+
+    @media (max-width: 640px) {
+      display: block;
+    }
+  }
+}
+
+/*
+ * General custom map icons.
+ */
+.customIconsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &.dashboardIconsRow {
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  &.explorerIconsColumn {
+    @media (max-width: 640px) {
+      display: none;
+    }
+  }
+}
+
+.mobileIconsTopLeft,
+.mobileIconsTopRight {
+  display: none;
+  position: fixed;
+
+  /* Clears the taller mobile header (see .mobileHeader) with a real gap,
+   * instead of sitting right under — or overlapped by — the avatar. */
+  top: 85px;
+
+  z-index: 99;
+
+  flex-direction: column;
+  gap: 12px;
+
+  @media (max-width: 640px) {
+    display: flex;
+  }
+
+  /* Match the design's chunkier 48px cards on mobile only — the shared
+   * .mapIconButton class keeps its smaller desktop/dashboard size. */
+  .mapIconButton {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+
+    svg,
+    img {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .textIcon {
+    font-size: 14px;
+  }
+}
+
+.mobileIconsTopLeft {
+  left: 15px;
+}
+
+.mobileIconsTopRight {
+  right: 15px;
+}
+
+.mobileZoom {
+  display: flex;
+  flex-direction: column;
+
+  width: 48px !important;
+  height: auto;
+
+  gap: 12px;
+
+  background: transparent;
+  box-shadow: none;
+
+  margin: 0;
+  padding: 0;
+}
+/*
+ * Custom icon button.
+ */
+.mapIconButton {
+  width: 32px;
+  height: 32px;
+
+  background-color: var(--base-white);
+
+  border: none;
+  border-radius: 8px;
+
+  box-shadow: 0 1px 4px
+    var(--alpha-black-30);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  padding: 0;
+
+  &:hover {
+    background-color: var(--neutral-100);
+    transform: scale(1.05);
+  }
+
+  svg,
+  img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/*
+ * Active icon.
+ */
+.mapIconButtonActive {
+  background-color: var(--primary-sa-600);
+
+  &:hover {
+    background-color: var(--primary-sa-700);
+  }
+
+  .textIcon,
+  svg {
+    color: var(--base-white);
+  }
+}
+
+.textIcon {
+  font-size: 11px;
+  font-weight: bold;
+
+  color: var(--neutral-700);
+
+  font-family: sans-serif;
+}
+
+/*
+ * Dashboard zoom rotation.
+ */
+:global(.esri-zoom) {
+  .dashboardMode & {
+    :global(.esri-widget--button) {
+      transform: rotate(-90deg) !important;
+    }
+  }
+}
+
+/*
+ * Full-screen loading state.
+ */
+.mapLoadingOverlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+
+  background-color:
+    var(--surface-panel, var(--base-white));
+}
+
+.mapLoadingLogo {
+  width: 240px;
+  height: auto;
+  object-fit: contain;
+}
+
+.mapLoadingText {
+  margin: 0;
+
+  font-size: 14px;
+
+  color:
+    var(--text-default, var(--neutral-700));
+}
+
+/*
+ * Basemap picker.
+ */
+/*
+ * Mobile tool panels (see ToolPanelHost) — stacked in normal flow flush
+ * above the docked toolbar, instead of the free-floating draggable windows
+ * used on desktop.
+ */
+.mobilePanelStack {
+  position: fixed;
+  left: 8px;
+  right: 8px;
+  z-index: 150;
+
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center; // was defaulting to stretch, which let each panel's own
+                        // fixed width start-align (= right edge in RTL) instead
+                        // of sitting centered in the stack
+  gap: 8px;
+
+  pointer-events: none;
+}
+
+.mobilePanelItem {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  pointer-events: auto;
+
+  // Every widget sets its own panel width differently — some via CSS
+  // (`max-width: calc(100vw - 32px)`), others via a hardcoded prop like
+  // Measurements' `<Card w={330}>` — so left alone they render at
+  // inconsistent widths next to each other. Force them all to match the
+  // container instead of touching every widget file individually.
+  & > * {
+    width: 90% !important;
+    max-width: 90% !important;
+  }
+}
+
+.basemapPicker {
+  position: fixed;
+
+  bottom: 15px;
+  right: 64px;
+
+  z-index: 200;
+
+  width: 240px;
+  max-height: 60vh;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  border-radius: 8px;
+
+  box-shadow: 0 2px 8px
+    rgba(0, 0, 0, 0.3);
+
+  background-color: var(--base-white);
+
+  :global(.esri-basemap-gallery) {
+    width: 100%;
+
+    box-shadow: none;
+
+    background: transparent;
+  }
+
+  :global(.esri-basemap-gallery__item-container) {
+    display: flex !important;
+    flex-flow: column !important;
+
+    grid-template-columns: none !important;
+
+    gap: 6px;
+
+    padding: 8px;
+  }
+
+  :global(.esri-basemap-gallery__item) {
+    width: 100%;
+    min-width: 0;
+  }
+
+  :global(.esri-basemap-gallery__item-thumbnail) {
+    width: 72px;
+    min-width: 72px;
+  }
+}
+
+/*
+ * Divider.
+ */
+.basemapPickerDivider {
+  height: 1px;
+
+  margin: 0 12px;
+
+  background: var(--neutral-100);
+}
+
+/*
+ * Basemap picker header.
+ */
+.basemapPickerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 8px 12px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color:
+    var(--text-default, var(--neutral-700));
+
+  border-bottom: 1px solid var(--neutral-100);
+
+  button {
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    line-height: 1;
+
+    color: var(--neutral-700);
+  }
+}

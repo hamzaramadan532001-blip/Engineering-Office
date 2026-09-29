@@ -1,0 +1,104 @@
+/*
+ * Banner naming the request the map is currently working on.
+ *
+ * `position: fixed` for the same reason the CAD operations rail is — <arcgis-map>
+ * establishes its own stacking context, so an overlay mounted as a sibling has to compete
+ * on the page's z-index rather than be trapped under the map element.
+ *
+ * Centred at the top, clear of the mobile header and the right-hand rail (z 190/200), and
+ * under them so neither is ever covered by it.
+ */
+.banner {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 185;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 8px 12px;
+
+  border: 1px solid var(--primary-sa-600);
+  border-radius: 10px;
+
+  background: var(--base-white);
+  color: var(--text-default, var(--neutral-700));
+
+  box-shadow: 0 4px 14px rgb(0 0 0 / 18%);
+}
+
+.icon {
+  display: flex;
+  flex-shrink: 0;
+
+  color: var(--primary-sa-600);
+  font-size: 20px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
+}
+
+.status {
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.statusError {
+  color: var(--red-600);
+}
+
+.close {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 26px;
+  height: 26px;
+  padding: 0;
+
+  border: 1px solid var(--neutral-200);
+  border-radius: 6px;
+
+  background: transparent;
+  color: var(--text-secondary);
+
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--surface-muted, var(--neutral-50));
+    color: var(--text-default, var(--neutral-700));
+  }
+}
+
+/* Phones: the banner spans the width under the header instead of floating centred. */
+@media (max-width: 768px) {
+  .banner {
+    top: 120px;
+    left: 12px;
+    right: 12px;
+
+    max-width: none;
+    transform: none;
+  }
+}

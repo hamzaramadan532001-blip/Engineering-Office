@@ -1,0 +1,104 @@
+.wrap {
+  direction: rtl;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #0f3d2e 0%, #123524 100%);
+  padding: var(--space-5, 20px);
+}
+
+.card {
+  width: 100%;
+  max-width: 22rem;
+  background-color: #fff;
+  border-radius: var(--mantine-radius-lg);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  padding: var(--space-6, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-display);
+  font-size: var(--typo-display-xs-size);
+  line-height: var(--typo-display-xs-line);
+  font-weight: var(--font-weight-bold);
+  color: #1a1a1a;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: var(--typo-text-md-size);
+  color: #8c8c8c;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 4px);
+  font-size: var(--typo-text-sm-size);
+  color: #1a1a1a;
+
+  input {
+    border: 1px solid #d9d9d9;
+    border-radius: var(--mantine-radius-md);
+    padding: var(--space-2, 8px) var(--space-3, 12px);
+    font-size: var(--typo-text-md-size);
+
+    &:focus {
+      outline: none;
+      border-color: #0f3d2e;
+    }
+  }
+}
+
+.error {
+  margin: 0;
+  color: #c0392b;
+  font-size: var(--typo-text-sm-size);
+}
+
+.submit {
+  border: none;
+  border-radius: var(--mantine-radius-md);
+  background-color: #0f3d2e;
+  color: #fff;
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-3, 12px);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: #123524;
+  }
+}
+
+/* "مرحباً {الاسم}" after a successful ID lookup, shown for the moment before the
+ * dashboard takes over. */
+.welcome {
+  margin: 0;
+  padding: 10px 12px;
+
+  border: 1px solid var(--primary-sa-600);
+  border-radius: 8px;
+
+  background: var(--primary-sa-50, var(--surface-muted));
+  color: var(--primary-sa-700);
+
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Helper line under the ID field. */
+.help {
+  color: var(--text-secondary);
+  font-size: 11px;
+}

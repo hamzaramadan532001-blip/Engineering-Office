@@ -1,0 +1,45 @@
+.dock {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background-color: var(--surface-panel);
+  border-radius: 999px;
+  box-shadow: var(--shadow-xl);
+  font-family: var(--font-family-text);
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--text-paragraph);
+  font-family: inherit;
+  font-size: var(--typo-text-sm-size);
+  line-height: var(--typo-text-sm-line);
+  font-weight: var(--font-weight-medium);
+  transition: background-color 120ms ease, color 120ms ease;
+
+  &:hover {
+    background-color: var(--surface-muted);
+  }
+}
+
+.itemIcon {
+  display: inline-flex;
+  font-size: 1.125rem;
+}
+
+.itemActive {
+  background-color: var(--button-bg-primary);
+  color: var(--text-oncolor);
+
+  &:hover {
+    background-color: var(--button-bg-primary-hover);
+  }
+}
