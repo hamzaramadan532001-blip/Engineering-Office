@@ -1,14 +1,30 @@
 "use client";
-import { Button, Group, Loader, Modal, Stack, Text } from "@makkah-municipality-gis/ui";
+import {
+  Button,
+  Group,
+  Loader,
+  Modal,
+  Stack,
+  Text,
+} from "@makkah-municipality-gis/ui";
 import { useEffect, useMemo, useState } from "react";
 import {
   HiOutlineArrowPath,
   HiOutlineChatBubbleLeftEllipsis,
+  HiOutlineDocumentText,
   HiOutlineMagnifyingGlass,
+  HiOutlineMap,
 } from "react-icons/hi2";
+import RequestAttachmentsModal from "../features/Requests/RequestAttachmentsModal";
 import type { RequestRow } from "../features/Requests/selectors";
 import styles from "./admin.module.scss";
-import { isPending, matchesFilter, type DecisionFilter } from "./departmentRequests";
+import {
+  canDecide,
+  isPending,
+  matchesFilter,
+  type DecisionFilter,
+} from "./departmentRequests";
+import RequestMapModal from "./RequestMapModal";
 import { useDepartmentRequests } from "./useDepartmentRequests";
 
 /**
@@ -17,7 +33,7 @@ import { useDepartmentRequests } from "./useDepartmentRequests";
  * The chrome (search, refresh, the four tabs, the confirm and note dialogs, pagination) is
  * the screen that was already here; only the DATA behind it changed. It used to list the
  * in-memory signup-request store; it now lists the department's real transaction requests
- * from SDI.Transaction, scoped to the department (see requestScope.ts), and its accept / reject /
+ * from SDI.Transaction — EVERY request, each with its file and map — and its accept / reject /
  * reply actions write to the request's own STATUS and COMMENT_ fields.
  */
 
@@ -83,18 +99,31 @@ export default function AdminSignupRequests() {
     status: "approved" | "rejected";
   } | null>(null);
   const [noteTarget, setNoteTarget] = useState<RequestRow | null>(null);
+  /** The request whose file list / map is open, or null. */
+  const [fileTarget, setFileTarget] = useState<number | null>(null);
+  const [mapTarget, setMapTarget] = useState<RequestRow | null>(null);
   const [noteText, setNoteText] = useState("");
 
   const filtered = useMemo(() => {
-    const byStatus = requests.filter((request) => matchesFilter(request, filter));
-    return search.trim() ? byStatus.filter((r) => matchesSearch(r, search)) : byStatus;
+    const byStatus = requests.filter((request) =>
+      matchesFilter(request, filter),
+    );
+    return search.trim()
+      ? byStatus.filter((r) => matchesSearch(r, search))
+      : byStatus;
   }, [requests, filter, search]);
 
-  const pendingCount = useMemo(() => requests.filter(isPending).length, [requests]);
+  const pendingCount = useMemo(
+    () => requests.filter(isPending).length,
+    [requests],
+  );
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
-  const pageItems = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  const pageItems = filtered.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
 
   useEffect(() => {
     setPage(1);
@@ -163,7 +192,10 @@ export default function AdminSignupRequests() {
             onClick={() => void reload()}
             disabled={loading}
           >
-            <HiOutlineArrowPath size={16} className={loading ? styles.spin : undefined} />
+            <HiOutlineArrowPath
+              size={16}
+              className={loading ? styles.spin : undefined}
+            />
             <span>تحديث</span>
           </button>
         </div>
@@ -193,10 +225,13 @@ export default function AdminSignupRequests() {
           </div>
         ) : employeeChecked && !employee ? (
           <p className={styles.empty}>
-            هذه الجلسة غير مرتبطة بحساب موظف — سجّل الدخول برقم الهوية لعرض طلبات إدارتك.
+            هذه الجلسة غير مرتبطة بحساب موظف — سجّل الدخول برقم الهوية لعرض
+            طلبات إدارتك.
           </p>
         ) : employee && !employee.deptId ? (
-          <p className={styles.empty}>{`لا توجد إدارة (DEPT_ID) مسجّلة للموظف: ${employee.fullName}`}</p>
+          <p
+            className={styles.empty}
+          >{`لا توجد إدارة (DEPT_ID) مسجّلة للموظف: ${employee.fullName}`}</p>
         ) : filtered.length === 0 ? (
           <p className={styles.empty}>لا توجد طلبات مطابقة.</p>
         ) : (
@@ -211,6 +246,8 @@ export default function AdminSignupRequests() {
                     <th>الملاحظة</th>
                     <th>الحالة</th>
                     <th>تاريخ الطلب</th>
+                    <th>الملف </th>
+                    <th> الخريطة</th>
                     <th aria-label="الإجراءات" />
                   </tr>
                 </thead>
@@ -221,7 +258,12 @@ export default function AdminSignupRequests() {
                       request={request}
                       deciding={decidingId === request.id}
                       sendingNote={sendingNoteId === request.id}
-                      onDecide={(status) => setConfirmTarget({ request, status })}
+                      canDecide={canDecide(request, employee?.deptId ?? null)}
+                      onOpenFile={() => setFileTarget(request.id)}
+                      onOpenMap={() => setMapTarget(request)}
+                      onDecide={(status) =>
+                        setConfirmTarget({ request, status })
+                      }
                       onOpenNote={() => {
                         setNoteTarget(request);
                         setNoteText("");
@@ -243,16 +285,18 @@ export default function AdminSignupRequests() {
                 >
                   ‹
                 </button>
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
-                  <button
-                    key={n}
-                    type="button"
-                    className={`${styles.pageNum} ${n === currentPage ? styles.pageNumActive : ""}`}
-                    onClick={() => setPage(n)}
-                  >
-                    {n}
-                  </button>
-                ))}
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (n) => (
+                    <button
+                      key={n}
+                      type="button"
+                      className={`${styles.pageNum} ${n === currentPage ? styles.pageNumActive : ""}`}
+                      onClick={() => setPage(n)}
+                    >
+                      {n}
+                    </button>
+                  ),
+                )}
                 <button
                   type="button"
                   className={styles.pageArrow}
@@ -271,13 +315,16 @@ export default function AdminSignupRequests() {
       <Modal
         opened={!!confirmTarget}
         onClose={closeConfirm}
-        title={confirmTarget?.status === "approved" ? "تأكيد القبول" : "تأكيد الرفض"}
+        title={
+          confirmTarget?.status === "approved" ? "تأكيد القبول" : "تأكيد الرفض"
+        }
         centered
       >
         {confirmTarget && (
           <Stack gap={16}>
             <Text>
-              هل أنت متأكد من {confirmTarget.status === "approved" ? "قبول" : "رفض"}{" "}
+              هل أنت متأكد من{" "}
+              {confirmTarget.status === "approved" ? "قبول" : "رفض"}{" "}
               {requestLabel(confirmTarget.request)}؟
             </Text>
             <Group gap={8} justify="flex-end">
@@ -288,14 +335,32 @@ export default function AdminSignupRequests() {
                 color={confirmTarget.status === "rejected" ? "red" : undefined}
                 onClick={confirmDecide}
               >
-                {confirmTarget.status === "approved" ? "تأكيد القبول" : "تأكيد الرفض"}
+                {confirmTarget.status === "approved"
+                  ? "تأكيد القبول"
+                  : "تأكيد الرفض"}
               </Button>
             </Group>
           </Stack>
         )}
       </Modal>
 
-      <Modal opened={!!noteTarget} onClose={closeNote} title="رد بملاحظة" centered>
+      <RequestAttachmentsModal
+        requestId={fileTarget}
+        onClose={() => setFileTarget(null)}
+      />
+
+      <RequestMapModal
+        requestId={mapTarget?.id ?? null}
+        label={mapTarget ? requestLabel(mapTarget) : undefined}
+        onClose={() => setMapTarget(null)}
+      />
+
+      <Modal
+        opened={!!noteTarget}
+        onClose={closeNote}
+        title="رد بملاحظة"
+        centered
+      >
         {noteTarget && (
           <Stack gap={12}>
             <Text size="sm" c="dimmed">
@@ -329,14 +394,21 @@ function DepartmentRequestRow({
   request,
   deciding,
   sendingNote,
+  canDecide,
   onDecide,
   onOpenNote,
+  onOpenFile,
+  onOpenMap,
 }: {
   request: RequestRow;
   deciding: boolean;
   sendingNote: boolean;
+  /** Pending AND on this admin's own department step — see `canDecide`. */
+  canDecide: boolean;
   onDecide: (status: "approved" | "rejected") => void;
   onOpenNote: () => void;
+  onOpenFile: () => void;
+  onOpenMap: () => void;
 }) {
   return (
     <tr>
@@ -345,13 +417,33 @@ function DepartmentRequestRow({
       <td className={styles.mono}>{request.userId ?? "—"}</td>
       <td>{request.comment || "—"}</td>
       <td>
-        <span className={`${styles.badge} ${badgeClass(request)}`}>{request.status}</span>
+        <span className={`${styles.badge} ${badgeClass(request)}`}>
+          {request.status}
+        </span>
       </td>
       <td>{formatDate(request.createdAt)}</td>
       <td>
-        {/* Actions only while the request is still awaiting this department's decision —
-            a decided request is shown, not re-decided. */}
-        {isPending(request) && (
+        <button type="button" className={styles.pillView} onClick={onOpenFile}>
+          <HiOutlineDocumentText size={14} />
+          الملف
+        </button>
+      </td>
+
+      <td>
+        <button type="button" className={styles.pillView} onClick={onOpenMap}>
+          <HiOutlineMap size={14} />
+          الخريطة
+        </button>
+      </td>
+      <td>
+        {/* Actions only while the request is awaiting THIS department's decision — a decided
+            request is shown, not re-decided, and one with another department is theirs. */}
+        {!canDecide && isPending(request) && request.workflowStep && (
+          <span
+            className={styles.otherDept}
+          >{`لدى: ${request.workflowStep}`}</span>
+        )}
+        {canDecide && (
           <div className={styles.rowActions}>
             <button
               type="button"

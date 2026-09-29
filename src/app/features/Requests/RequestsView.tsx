@@ -4,6 +4,7 @@ import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import { Button } from "@makkah-municipality-gis/ui";
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import {
+  HiOutlineArrowPath,
   HiOutlineClipboardDocumentCheck,
   HiOutlineDocumentText,
   HiOutlineMagnifyingGlass,
@@ -165,10 +166,24 @@ export default function RequestsView({ onViewOnMap }: RequestsViewProps) {
       <header className={styles.header}>
         <h1 className={styles.title}>الطلبات</h1>
 
-        <Button size="sm" onClick={() => setFormOpen(true)}>
-          <HiOutlinePlus size={16} />
-          <span>إضافة طلب</span>
-        </Button>
+        <div className={styles.headerActions}>
+          {/* Same as the admin card's "تحديث": re-reads the office's requests from the
+              service, spinning and disabled while the query is in flight. */}
+          <Button
+            size="sm"
+            variant="default"
+            onClick={() => void loadRequests()}
+            disabled={loading || !officeChecked}
+          >
+            <HiOutlineArrowPath size={16} className={loading ? styles.spin : undefined} />
+            <span>تحديث</span>
+          </Button>
+
+          <Button size="sm" onClick={() => setFormOpen(true)}>
+            <HiOutlinePlus size={16} />
+            <span>إضافة طلب</span>
+          </Button>
+        </div>
       </header>
 
       {!officeChecked || loading ? (

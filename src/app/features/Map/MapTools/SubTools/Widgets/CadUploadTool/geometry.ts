@@ -9,7 +9,6 @@
  * GeoJSON and Esri geometry, so keeping one copy avoids the two drifting apart.
  */
 
-import Color from "@arcgis/core/Color";
 import type EsriGeometry from "@arcgis/core/geometry/Geometry";
 import EsriMultipoint from "@arcgis/core/geometry/Multipoint";
 import EsriPoint from "@arcgis/core/geometry/Point";
@@ -237,14 +236,8 @@ export async function reprojectToWGS84(
   };
 }
 
-export function hexToRgba(hex: string, opacityPercent: number): Color {
-  const clean = hex.replace("#", "");
-  const bigint = Number.parseInt(clean, 16);
-  const r = (bigint >> 16) & 255;
-  const g = (bigint >> 8) & 255;
-  const b = bigint & 255;
-  return new Color([r, g, b, Math.max(0, Math.min(100, opacityPercent)) / 100]);
-}
+/** Moved to src/lib (shared with the regulation styles); re-exported so existing imports hold. */
+export { hexToRgba } from "@/lib/arcgisColor";
 
 /** Serialises a collection to a blob URL — GeoJSONLayer takes a URL, not an object. */
 export function toGeoJSONBlobUrl(collection: GeoJSONFeatureCollection): string {

@@ -9,7 +9,8 @@
  *  - right after "تطبيق" on the intersect operation, the split is a transient client-side
  *    GeoJSONLayer (CadOperations/useOperationLayer);
  *  - on reopening the request later, the SAME split comes back as server FeatureLayers
- *    0 and 1 (features/Map/requestResultLayers.ts).
+ *    0 and 1 (features/Map/requestResultLayers.ts);
+ *  - the admin dashboard's per-request map (app/admin/requestMap.ts) draws the same three.
  *
  * If each defined its own colours, a parcel would change appearance the moment the page
  * was reloaded. Both read from here instead, so it never does.
@@ -23,7 +24,7 @@ import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import SimpleRenderer from "@arcgis/core/renderers/SimpleRenderer";
 import UniqueValueRenderer from "@arcgis/core/renderers/UniqueValueRenderer";
 import { resolveToken } from "@/lib/designTokens";
-import { hexToRgba } from "./MapTools/SubTools/Widgets/CadUploadTool/geometry";
+import { hexToRgba } from "./arcgisColor";
 
 /** Outline width, in points, for the inside and outside parts. The whole point of the
  *  styling is that the two parts read as distinct areas at a glance, so the border is

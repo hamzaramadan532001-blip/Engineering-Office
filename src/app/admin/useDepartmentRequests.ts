@@ -14,8 +14,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { RequestRow } from "../features/Requests/selectors";
-import { decideRequest, fetchDepartmentRequests, replyWithNote } from "./departmentRequests";
-import { getHandledRequestIds, rememberHandledRequest } from "./handledRequests";
+import { decideRequest, fetchAllRequests, replyWithNote } from "./departmentRequests";
 
 export type SignedInEmployee = {
   fullName: string;
@@ -52,8 +51,8 @@ export function useDepartmentRequests() {
   const deptId = employee?.deptId ?? null;
 
   const reload = useCallback(async () => {
-    // Never query unscoped — that would list every department's requests, which is a data
-    // leak rather than just a wrong screen.
+    // Every request is listed (see fetchAllRequests), but only for a signed-in employee with a
+    // department: the department is what decides which rows may be acted on.
     if (!deptId) {
       setRequests([]);
       setLoading(false);
@@ -64,9 +63,7 @@ export function useDepartmentRequests() {
     setError(null);
 
     try {
-      // Ask for the queue AND for anything this department has already decided, so a
-      // rejected or replied-to request keeps showing its outcome instead of vanishing.
-      setRequests(await fetchDepartmentRequests(deptId, getHandledRequestIds(deptId)));
+      setRequests(await fetchAllRequests());
     } catch (queryError) {
       console.error("[admin] failed to load the department's requests:", queryError);
       setError("تعذّر تحميل الطلبات من الخادم.");
@@ -86,9 +83,6 @@ export function useDepartmentRequests() {
       setError(null);
       try {
         await decideRequest(objectId, decision);
-        // Recorded before the reload so the re-query already names this id — a rejection
-        // moves WORKFLOW_STEPS away, and the row would otherwise be gone by then.
-        if (deptId) rememberHandledRequest(deptId, objectId);
         await reload();
       } catch (decideError) {
         console.error("[admin] failed to record the decision:", decideError);
@@ -99,7 +93,7 @@ export function useDepartmentRequests() {
         setDecidingId(null);
       }
     },
-    [reload, deptId],
+    [reload],
   );
 
   const sendNote = useCallback(
@@ -108,7 +102,6 @@ export function useDepartmentRequests() {
       setError(null);
       try {
         await replyWithNote(objectId, note);
-        if (deptId) rememberHandledRequest(deptId, objectId);
         await reload();
       } catch (noteError) {
         console.error("[admin] failed to send the note:", noteError);
@@ -117,7 +110,7 @@ export function useDepartmentRequests() {
         setSendingNoteId(null);
       }
     },
-    [reload, deptId],
+    [reload],
   );
 
   return {

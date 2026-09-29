@@ -1,13 +1,13 @@
 "use client";
 
 /**
- * Data access for the department's request queue, and the accept / reject / reply decisions
+ * Data access for the admin's request list, and the accept / reject / reply decisions
  * taken on it.
  *
- * Scoping: a request sits with a department when its `WORKFLOW_STEPS` equals that
- * department's `DEPT_ID` — the workflow graph's NEXT_STEPS values ARE department ids (its one
- * row today reads `office → 201090`, and 201090 is a DEPT_ID). So the queue is
- * `WORKFLOW_STEPS = '<DEPT_ID>'`.
+ * The LIST is every request (`fetchAllRequests`). The right to DECIDE is scoped: a request
+ * sits with a department when its `WORKFLOW_STEPS` equals that department's `DEPT_ID` — the
+ * workflow graph's NEXT_STEPS values ARE department ids (`office → 201090 → 2010`) — and only
+ * that department may decide it (`canDecide`).
  *
  * Decisions are written to `STATUS`, using the field's own coded-value domain rather than a
  * parallel vocabulary: accept → 5 (قبول), reject → 7 (رفض), reply-with-notes → 4
@@ -27,7 +27,6 @@ import {
   type RequestRow,
 } from "../features/Requests/selectors";
 import { fetchWorkflowSteps, resolveInitialStep } from "../features/Requests/workflow";
-import { departmentWhere, returnedToOfficeClause } from "./requestScope";
 
 const REQUEST_LAYER_URL = regulationLayerUrl(REGULATION_LAYERS.TRANSACTIONS_TABLE);
 
@@ -79,9 +78,20 @@ export function matchesFilter(request: RequestRow, filter: DecisionFilter): bool
   return STATUS_GROUPS[filter].includes(code);
 }
 
-/** True when this request is still waiting on the department to decide. */
+/** True when this request is still waiting on a decision. */
 export function isPending(request: RequestRow): boolean {
   return matchesFilter(request, "pending");
+}
+
+/**
+ * May THIS department accept / reject / reply to the request?
+ *
+ * Only when it is pending AND sitting on this department's own workflow step. Seeing every
+ * request is fine; deciding one that is with another department (or not sent yet) would
+ * skip that department's review, so those rows are shown without actions.
+ */
+export function canDecide(request: RequestRow, deptId: string | null): boolean {
+  return deptId !== null && request.workflowStep === deptId && isPending(request);
 }
 
 let layer: FeatureLayer | null = null;
@@ -95,34 +105,18 @@ async function getLayer(): Promise<FeatureLayer> {
 }
 
 /**
- * Everything that belongs on the department's card: its queue (which includes what it
- * ACCEPTED), what it REJECTED or replied to, and any id this browser remembers deciding.
+ * EVERY request in SDI.Transaction — whichever office raised it and whichever step it is on.
  *
- * Rejected and replied-to requests have had `WORKFLOW_STEPS` moved back to the office, so
- * they are found through the workflow graph rather than the department clause — on the
- * service, for every browser. See requestScope.ts for the rule and its one limitation.
- *
- * A graph that cannot be read degrades to queue + remembered ids (the previous behaviour)
- * rather than failing the whole card.
+ * The card used to list only its own department's step (plus what it had sent back), which
+ * hid every request sitting with another department or not yet sent. A reviewer needs the
+ * whole picture, so the list is unscoped; what stays scoped is the right to DECIDE — see
+ * `canDecide`.
  */
-export async function fetchDepartmentRequests(
-  deptId: string,
-  handledIds: number[] = [],
-): Promise<RequestRow[]> {
+export async function fetchAllRequests(): Promise<RequestRow[]> {
   const featureLayer = await getLayer();
 
-  let returnedClause: string | null = null;
-  try {
-    returnedClause = returnedToOfficeClause(await fetchWorkflowSteps({ refresh: true }), deptId);
-  } catch (graphError) {
-    console.error(
-      "[admin] could not read the workflow graph — rejected requests may be missing:",
-      graphError,
-    );
-  }
-
   const result = await featureLayer.queryFeatures({
-    where: departmentWhere(deptId, { returnedClause, handledIds }),
+    where: "1=1",
     outFields: REQUEST_OUT_FIELDS,
     returnGeometry: false,
     orderByFields: ["OBJECTID DESC"],

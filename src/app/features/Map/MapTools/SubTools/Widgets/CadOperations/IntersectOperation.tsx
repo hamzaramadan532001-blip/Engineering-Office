@@ -5,7 +5,7 @@ import type UniqueValueRenderer from "@arcgis/core/renderers/UniqueValueRenderer
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { HiOutlineDocumentArrowDown } from "react-icons/hi2";
 import { activeRequestStore } from "@/lib/activeRequest/store";
-import { intersectSplitRenderer } from "@/app/features/Map/regulationStyles";
+import { intersectSplitRenderer } from "@/lib/regulationStyles";
 import { refreshRequestResultLayers } from "@/app/features/Map/requestResultLayers";
 import { attachRequestReport, saveRequestIntersect } from "../CadUploadTool/requestCad";
 import type { CadDrawing } from "../CadUploadTool/store";

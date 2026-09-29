@@ -22,7 +22,7 @@
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import { regulationLayerUrl, REGULATION_LAYERS, TRANSACTION_ID_FIELD } from "@/lib/arcgis";
 import { getMapElement } from "./utils";
-import { insideRenderer, outsideRenderer } from "./regulationStyles";
+import { insideRenderer, outsideRenderer } from "@/lib/regulationStyles";
 
 /** Layer titles — also how a stale layer left by a hot reload is found and removed. */
 const TITLES = {

@@ -100,13 +100,16 @@ export default function RequestAttachmentsModal({
 
         if (cancelled) return;
 
-        if (!response.ok) {
+        // Anything that is not the route's own JSON — a redirect to /login, an HTML error page —
+        // is a FAILURE, never "no attachments". Reading it as an empty list is exactly how a
+        // reviewer without an office session was told a request with files had none.
+        if (!response.ok || response.redirected || !Array.isArray(payload?.attachments)) {
           setError(payload?.error ?? COPY.failed);
           setAttachments([]);
           return;
         }
 
-        setAttachments(payload?.attachments ?? []);
+        setAttachments(payload.attachments);
       } catch (fetchError) {
         console.error("[requests] failed to load the attachment list:", fetchError);
         if (!cancelled) setError(COPY.failed);

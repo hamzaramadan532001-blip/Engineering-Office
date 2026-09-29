@@ -54,16 +54,11 @@ export default function SendRequestModal({ request, onClose, onSent }: SendReque
     setSent(false);
   };
 
+  // No page reload after a send: `onSent` already re-reads the list from the service, so
+  // the new step and status show without throwing away the rest of the app's state.
   const handleClose = () => {
-    const wasSent = sent;
     reset();
     onClose();
-
-    // A completed send reloads the page, so every screen re-reads the request from the
-    // service rather than trusting local state. Done on CLOSE, not on send: reloading the
-    // moment the edit returns would wipe the "تم الإرسال بنجاح" message off the screen
-    // before it could be read.
-    if (wasSent) window.location.reload();
   };
 
   const handleFile = (event: React.ChangeEvent<HTMLInputElement>) => {
