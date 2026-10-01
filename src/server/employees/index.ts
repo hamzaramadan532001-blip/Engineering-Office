@@ -16,10 +16,9 @@
  */
 
 import { REGULATION_LAYERS } from "@/lib/arcgis";
+import { arcgisServerFetch, REGULATION_SERVICE_URL } from "@/server/arcgis";
 
-const SERVICE_URL =
-  process.env.ARCGIS_REGULATION_TRANSACTIONS_URL ??
-  "https://maps.holymakkah.gov.sa/arcgis/rest/services/SDI/Regulation571EditTrans/FeatureServer";
+const SERVICE_URL = REGULATION_SERVICE_URL;
 
 export type Employee = {
   objectId: number;
@@ -70,7 +69,7 @@ async function queryLayer(
     returnGeometry: "false",
   });
 
-  const response = await fetch(`${SERVICE_URL}/${layerId}/query`, {
+  const response = await arcgisServerFetch(`${SERVICE_URL}/${layerId}/query`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: body.toString(),

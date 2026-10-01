@@ -3,6 +3,7 @@ import "@arcgis/map-components/dist/components/arcgis-map";
 import "@arcgis/map-components/dist/components/arcgis-zoom";
 import Basemap from "@arcgis/core/Basemap";
 import SpatialReference from "@arcgis/core/geometry/SpatialReference";
+import esriConfig from "@arcgis/core/config";
 import esriId from "@arcgis/core/identity/IdentityManager";
 import TileLayer from "@arcgis/core/layers/TileLayer";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
@@ -13,7 +14,12 @@ import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
 
 import EsriMap from "@arcgis/core/Map";
 import { useState } from "react";
-import { ARCGIS_PORTAL_URL, EXECUTIVE_DASHBOARD_URL, MUNICIPAL_ASSETS_URL } from "@/lib/arcgis";
+import {
+  ARCGIS_PORTAL_URL,
+  EXECUTIVE_DASHBOARD_URL,
+  MUNICIPAL_ASSETS_URL,
+  REGULATION_TRANSACTIONS_URL,
+} from "@/lib/arcgis";
 import { getArcgisToken, getBusinessMapToken } from "@/lib/runtimeConfig";
 import { BASEMAP_V2_URL, BUSINESS_MAP_URL } from "./arcgis.config";
 import { createBusinessMapLayer } from "./businessMap";
@@ -74,6 +80,24 @@ if (BUSINESS_MAP_TOKEN) {
   } catch (tokenErr) {
     console.warn("BusinessMap token registration warning:", tokenErr);
   }
+
+  // Send the token on the FIRST request too. registerToken alone lets the first call go
+  // out bare, the server answers 499 "Token Required", and the IdentityManager retry
+  // then crashes in the production bundle ("reading 'replace'") — the requests table and
+  // BusinessMap layers never load in the self-hosted build. Dev recovers, prod doesn't.
+  esriConfig.request.interceptors ??= [];
+  esriConfig.request.interceptors.push({
+    urls: [
+      "https://maps.holymakkah.gov.sa/arcgis",
+      restServiceRoot(BUSINESS_MAP_URL),
+      restServiceRoot(EXECUTIVE_DASHBOARD_URL),
+      restServiceRoot(REGULATION_TRANSACTIONS_URL),
+    ],
+    before(params) {
+      const query = (params.requestOptions.query ??= {}) as Record<string, unknown>;
+      query.token ??= BUSINESS_MAP_TOKEN;
+    },
+  });
 }
 
 const MAP_SPATIAL_REFERENCE = new SpatialReference({ wkid: 32637 });

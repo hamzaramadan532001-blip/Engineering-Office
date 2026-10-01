@@ -1,4 +1,5 @@
 "use client";
+import { apiUrl } from "@/lib/api";
 
 /**
  * The engineering office the signed-in session belongs to.
@@ -74,7 +75,7 @@ async function hydrate(): Promise<ActiveOffice | null> {
 
   hydration = (async () => {
     try {
-      const response = await fetch("/api/auth/office", { cache: "no-store" });
+      const response = await fetch(apiUrl("/api/auth/office"), { cache: "no-store" });
       if (!response.ok) return null;
 
       const payload = (await response.json()) as { office?: ActiveOffice };

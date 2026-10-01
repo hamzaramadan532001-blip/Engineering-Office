@@ -13,10 +13,9 @@
  */
 
 import { REGULATION_LAYERS } from "@/lib/arcgis";
+import { REGULATION_SERVICE_URL } from "@/server/arcgis";
 
-const SERVICE_URL =
-  process.env.ARCGIS_REGULATION_TRANSACTIONS_URL ??
-  "https://maps.holymakkah.gov.sa/arcgis/rest/services/SDI/Regulation571EditTrans/FeatureServer";
+const SERVICE_URL = REGULATION_SERVICE_URL;
 
 const REQUESTS_LAYER_URL = `${SERVICE_URL}/${REGULATION_LAYERS.TRANSACTIONS_TABLE}`;
 

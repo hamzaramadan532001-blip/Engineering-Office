@@ -10,6 +10,7 @@ import styles from "./AppShell.module.scss";
 import MapWrapper from "./features/Map/MapWrapper";
 import RequestsView from "./features/Requests/RequestsView";
 import type { RequestRow } from "./features/Requests/selectors";
+import { withBasePath } from "@/lib/api";
 
 type ViewId = "map" | "requests";
 
@@ -49,7 +50,7 @@ export default function AppShell() {
       <aside className={`${styles.sidebar} ${collapsed ? styles.sidebarCollapsed : ""}`}>
         <div className={styles.sidebarTop}>
           <div className={styles.logoBlock}>
-            <Logo src="/Holy_Makkah_Municipality_Logo_Dark.png" width={140} />
+            <Logo src={withBasePath("/Holy_Makkah_Municipality_Logo_Dark.png")} width={140} />
           </div>
 
           <button

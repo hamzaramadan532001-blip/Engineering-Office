@@ -5,3 +5,4 @@ allowBuilds:
   '@vaadin/vaadin-usage-statistics': false
   core-js: false
   sharp: false
+nodeLinker: hoisted

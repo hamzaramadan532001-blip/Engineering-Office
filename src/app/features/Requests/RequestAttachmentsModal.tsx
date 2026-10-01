@@ -17,6 +17,7 @@ import { Button, Loader, Modal, Stack, Text } from "@makkah-municipality-gis/ui"
 import { useCallback, useEffect, useState } from "react";
 import { HiOutlineArrowTopRightOnSquare, HiOutlineDocumentText } from "react-icons/hi2";
 import styles from "./RequestsView.module.scss";
+import { apiUrl } from "@/lib/api";
 
 const COPY = {
   title: "مرفقات الطلب",
@@ -71,7 +72,7 @@ export default function RequestAttachmentsModal({
   const [previewId, setPreviewId] = useState<number | null>(null);
 
   const attachmentUrl = useCallback(
-    (attachmentId: number) => `/api/requests/${requestId}/attachments/${attachmentId}`,
+    (attachmentId: number) => apiUrl(`/api/requests/${requestId}/attachments/${attachmentId}`),
     [requestId],
   );
 
@@ -90,7 +91,7 @@ export default function RequestAttachmentsModal({
 
     void (async () => {
       try {
-        const response = await fetch(`/api/requests/${requestId}/attachments`, {
+        const response = await fetch(apiUrl(`/api/requests/${requestId}/attachments`), {
           cache: "no-store",
         });
 

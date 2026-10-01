@@ -6,6 +6,7 @@ import {
   HiOutlineDocumentText,
 } from "react-icons/hi2";
 import styles from "./login.module.scss";
+import { withBasePath } from "@/lib/api";
 
 
 
@@ -15,8 +16,8 @@ export default function HeroContent() {
   return (
     <div className={styles.heroContent}>
       <div className={styles.heroLogo}>
-        {/* <Logo src="/figma-assets/logos/logo-horizontal-light-3.png" width={220} /> */}
-        <Logo src="/Holy_Makkah_Municipality_Logo_Dark.png" width={220} />
+        {/* <Logo src={withBasePath("/figma-assets/logos/logo-horizontal-light-3.png")} width={220} /> */}
+        <Logo src={withBasePath("/Holy_Makkah_Municipality_Logo_Dark.png")} width={220} />
       </div>
 
       <div className={styles.heroBody}>

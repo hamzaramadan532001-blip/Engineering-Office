@@ -1,5 +1,6 @@
+import { withBasePath } from "@/lib/api";
 /** Floating profile avatar shown on the map (Figma nodes 1:38342 / 1:39459). */
-export const USER_AVATAR = "/figma-assets/photos/user.png";
+export const USER_AVATAR = withBasePath("/figma-assets/photos/user.png");
 
 /**
  * Destination for the "ايميل التواصل" (contact email) action.

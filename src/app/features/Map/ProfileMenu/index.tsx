@@ -9,6 +9,7 @@ import { logout } from "@/lib/auth";
 import { useIsMobile } from "../useIsMobile";
 import { CONTACT_EMAIL, USER_AVATAR } from "./constants";
 import styles from "./ProfileMenu.module.scss";
+import { withBasePath } from "@/lib/api";
 
 export default function ProfileMenu() {
   const router = useRouter();
@@ -70,14 +71,14 @@ export default function ProfileMenu() {
           <div className={styles.sheetHeader}>
             <span className={styles.sheetLogo}>
               <Image
-                src="/Holy Makkah Municipality Logo.png"
+                src={withBasePath("/Holy Makkah Municipality Logo.png")}
                 alt="الأمانة العامة لمنطقة مكة المكرمة"
                 width={150}
                 height={37}
                 className={`${styles.sheetLogoImg} ${styles.sheetLogoLight}`}
               />
               <Image
-                src="/Holy Makkah Municipality Logo Dark.png"
+                src={withBasePath("/Holy_Makkah_Municipality_Logo_Dark.png")}
                 alt="الأمانة العامة لمنطقة مكة المكرمة"
                 width={150}
                 height={37}

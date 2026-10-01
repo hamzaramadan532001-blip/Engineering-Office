@@ -15,6 +15,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { RequestRow } from "../features/Requests/selectors";
 import { decideRequest, fetchAllRequests, replyWithNote } from "./departmentRequests";
+import { apiUrl } from "@/lib/api";
 
 export type SignedInEmployee = {
   fullName: string;
@@ -35,7 +36,7 @@ export function useDepartmentRequests() {
   useEffect(() => {
     void (async () => {
       try {
-        const response = await fetch("/api/admin/employee", { cache: "no-store" });
+        const response = await fetch(apiUrl("/api/admin/employee"), { cache: "no-store" });
         if (response.ok) {
           const data = (await response.json()) as { employee?: SignedInEmployee | null };
           setEmployee(data.employee ?? null);

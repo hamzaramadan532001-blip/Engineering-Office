@@ -44,6 +44,7 @@ import {
   matchesLabel,
 } from "./selectors";
 import type { SpatialContext } from "./spatialContext";
+import { withBasePath } from "@/lib/api";
 
 const CONTEXT = COPY.intersect.context;
 const REPORT = CONTEXT.report;
@@ -417,7 +418,7 @@ export function ReportSheet({
         <div className={styles.colInfo}>
           <header className={styles.orgHeader}>
             <Image
-              src="/Holy Makkah Municipality Logo.png"
+              src={withBasePath("/Holy Makkah Municipality Logo.png")}
               alt={REPORT.authority}
               width={96}
               height={24}

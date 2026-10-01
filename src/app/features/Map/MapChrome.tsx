@@ -16,6 +16,7 @@ import { useIsMobile } from "./useIsMobile";
 import { useMobileDockOffset } from "./useMobileDockOffset";
 import { getMapElement } from "./utils";
 import CadUploadTool from "./MapTools/SubTools/Widgets/CadUploadTool";
+import { withBasePath } from "@/lib/api";
 
 esriConfig.portalUrl = SCENE_PORTAL_URL;
 
@@ -26,7 +27,7 @@ export function MobileHeader() {
     <div className={styles.mobileHeader}>
       <MapBox py={1} px="xs" className={styles.logoBox}>
         <Image
-          src="/Holy Makkah Municipality Logo.png"
+          src={withBasePath("/Holy Makkah Municipality Logo.png")}
           alt="Holy Makkah Municipality"
           width={170}
           height={42}
@@ -34,7 +35,7 @@ export function MobileHeader() {
           className={`${styles.logoImage} ${styles.logoImageLight}`}
         />
         <Image
-          src="/Holy Makkah Municipality Logo Dark.png"
+          src={withBasePath("/Holy_Makkah_Municipality_Logo_Dark.png")}
           alt="Holy Makkah Municipality"
           width={170}
           height={42}

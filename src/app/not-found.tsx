@@ -2,6 +2,7 @@ import { Button } from "@makkah-municipality-gis/ui";
 import type { Metadata } from "next";
 import StatusScreen from "./components/StatusScreen";
 import { ACTION_LABELS, APP_NAME, STATUS_COPY } from "./components/StatusScreen/constants";
+import { withBasePath } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: `${STATUS_COPY["404"].title} — ${APP_NAME}`,
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <StatusScreen code="404">
-      <Button component="a" href="/">
+      <Button component="a" href={withBasePath("/")}>
         {ACTION_LABELS.backToMap}
       </Button>
     </StatusScreen>

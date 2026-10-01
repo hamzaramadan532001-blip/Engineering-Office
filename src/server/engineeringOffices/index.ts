@@ -15,12 +15,11 @@
  */
 
 import { REGULATION_LAYERS } from "@/lib/arcgis";
+import { arcgisServerFetch, REGULATION_SERVICE_URL } from "@/server/arcgis";
 
 /** Read straight from `process.env` — same pattern as app/api/cad/upload/route.ts. The
  *  client-side runtime config is not available (and not appropriate) here. */
-const SERVICE_URL =
-  process.env.ARCGIS_REGULATION_TRANSACTIONS_URL ??
-  "https://maps.holymakkah.gov.sa/arcgis/rest/services/SDI/Regulation571EditTrans/FeatureServer";
+const SERVICE_URL = REGULATION_SERVICE_URL;
 
 const OFFICES_LAYER_URL = `${SERVICE_URL}/${REGULATION_LAYERS.ENGINEERING_OFFICES_TABLE}`;
 
@@ -115,7 +114,7 @@ export async function findOfficeByNationalNumber(
     returnGeometry: "false",
   });
 
-  const response = await fetch(`${OFFICES_LAYER_URL}/query`, {
+  const response = await arcgisServerFetch(`${OFFICES_LAYER_URL}/query`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: body.toString(),

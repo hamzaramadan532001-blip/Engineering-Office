@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import styles from "./adminLogin.module.scss";
+import { apiUrl } from "@/lib/api";
 
 /**
  * Admin login by ID / residency number, checked against SDI.EMPLOYEES — the same method the
@@ -45,7 +46,7 @@ export default function AdminLoginForm() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/admin/employee-login", {
+      const res = await fetch(apiUrl("/api/admin/employee-login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ identityNo }),

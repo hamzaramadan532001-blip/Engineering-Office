@@ -8,6 +8,7 @@ import { ADMIN_SESSION_COOKIE } from "@/lib/adminAuth";
 import { readAdminSession } from "@/server/adminSession";
 import styles from "../AdminShell.module.scss";
 import LogoutButton from "./LogoutButton";
+import { withBasePath } from "@/lib/api";
 
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
@@ -23,7 +24,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
         <div className={styles.logoBlock}>
-          <Logo src="/Holy_Makkah_Municipality_Logo_Dark.png" width={160} />
+          <Logo src={withBasePath("/Holy_Makkah_Municipality_Logo_Dark.png")} width={160} />
         </div>
 
         <nav className={styles.nav}>

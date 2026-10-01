@@ -44,6 +44,7 @@ import {
   FillPatternValue,
   LineStyleValue,
 } from "./types";
+import { apiUrl } from "@/lib/api";
 
 export default function CadUploadTool({ onClose }: { onClose?: () => void }) {
   void onClose; // panel chrome owns the close button; kept for the ToolPanelHost contract
@@ -147,7 +148,7 @@ export default function CadUploadTool({ onClose }: { onClose?: () => void }) {
       const formData = new FormData();
       formData.append("file", selectedFile);
 
-      const response = await fetch("/api/cad/upload", {
+      const response = await fetch(apiUrl("/api/cad/upload"), {
         method: "POST",
         body: formData,
       });

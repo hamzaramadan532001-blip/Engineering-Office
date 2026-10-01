@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import type { NafathStatus } from "../nafath";
 import { useNafathVerification } from "./useNafathVerification";
 import styles from "./verify.module.scss";
+import { withBasePath } from "@/lib/api";
 
 interface VerifyClientProps {
   transactionId: string;
@@ -65,7 +66,7 @@ export default function VerifyClient({
 
       {status === "signupRejected" && (
         <div className={styles.actionsRow}>
-          <a href="/login" className={styles.resend}>
+          <a href={withBasePath("/login")} className={styles.resend}>
             العودة لصفحة تسجيل الدخول
           </a>
         </div>

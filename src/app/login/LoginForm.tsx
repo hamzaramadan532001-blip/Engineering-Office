@@ -7,6 +7,7 @@ import { HiOutlineLockClosed, HiOutlineQuestionMarkCircle } from "react-icons/hi
 import { activeOfficeStore, type ActiveOffice } from "@/lib/activeOffice/store";
 import styles from "./login.module.scss";
 import { loginSchema, zodResolver } from "./schema";
+import { apiUrl } from "@/lib/api";
 
 /**
  * Tries the engineering-office register first.
@@ -22,7 +23,7 @@ const COPY = {
 } as const;
 
 async function signInAsOffice(nationalNumber: string): Promise<ActiveOffice | null> {
-  const response = await fetch("/api/auth/office-login", {
+  const response = await fetch(apiUrl("/api/auth/office-login"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nationalNumber }),

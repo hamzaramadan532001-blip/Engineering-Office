@@ -2,6 +2,7 @@ import { Logo } from "@makkah-municipality-gis/ui";
 import clsx from "clsx";
 import type { ReactNode } from "react";
 import { ERROR_REFERENCE_LABEL, STATUS_COPY, type StatusCode } from "./constants";
+import { withBasePath } from "@/lib/api";
 import styles from "./StatusScreen.module.scss";
 
 export interface StatusScreenProps {
@@ -18,7 +19,11 @@ export default function StatusScreen({ code, children, reference }: StatusScreen
   return (
     <main className={styles.page}>
       <section className={styles.card}>
-        <Logo width={200} className={styles.logo} />
+        <Logo
+          src={withBasePath("/figma-assets/logos/logo-horizontal-light-3.png")}
+          width={200}
+          className={styles.logo}
+        />
 
         <span className={clsx(styles.badge, styles[tone])} aria-hidden>
           <Icon size={28} />

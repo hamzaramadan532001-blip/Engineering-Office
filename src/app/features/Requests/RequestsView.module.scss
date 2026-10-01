@@ -153,7 +153,7 @@
     font-size: var(--typo-text-xs-size);
   }
 
-  tbody tr:not(:last-child) td {
+  tbody tr:not(:last-child) {
     border-bottom: 1px solid #f0f0f0;
   }
 

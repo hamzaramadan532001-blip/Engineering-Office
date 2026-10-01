@@ -13,6 +13,7 @@ import {
   SCENE_PORTAL_URL,
   SCENE_WEBSCENE_ITEM_ID,
 } from "./arcgis.config";
+import { withBasePath } from "@/lib/api";
 
 export interface SceneSource {
   map: WebScene | EsriMap;
@@ -69,8 +70,8 @@ export function createExplorerScene(): SceneSource {
  */
 // Picker thumbnails for the locally-built basemaps (Makkah-centred tile captures checked
 // into /public; the imagery entry gets its thumbnail from its Portal item).
-const MUNICIPAL_THUMBNAIL = "/basemap-thumbnails/municipal.png";
-const OSM_THUMBNAIL = "/basemap-thumbnails/osm.png";
+const MUNICIPAL_THUMBNAIL = withBasePath("/basemap-thumbnails/municipal.png");
+const OSM_THUMBNAIL = withBasePath("/basemap-thumbnails/osm.png");
 
 export function createBasemapGallerySource(is3D: boolean): LocalBasemapsSource {
   // The picker's imagery entry has its own config (GALLERY_IMAGERY, "none" → hidden) —

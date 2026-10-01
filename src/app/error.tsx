@@ -4,6 +4,7 @@ import { Button } from "@makkah-municipality-gis/ui";
 import { useEffect } from "react";
 import StatusScreen from "./components/StatusScreen";
 import { ACTION_LABELS } from "./components/StatusScreen/constants";
+import { withBasePath } from "@/lib/api";
 
 export interface ErrorPageProps {
   error: Error & { digest?: string };
@@ -21,7 +22,7 @@ export default function ErrorPage({ error, unstable_retry }: ErrorPageProps) {
   return (
     <StatusScreen code="500" reference={error.digest}>
       <Button onClick={() => unstable_retry()}>{ACTION_LABELS.retry}</Button>
-      <Button component="a" href="/" variant="outline">
+      <Button component="a" href={withBasePath("/")} variant="outline">
         {ACTION_LABELS.backToMap}
       </Button>
     </StatusScreen>
